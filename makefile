@@ -2,7 +2,8 @@
 
 CXXOPTS=-Wall -O0 -g
 COPTS=-Wall -O0 -g -std=c11
-
+CPPFLAGS=-I./ -I/usr/include -I./include
+CFLAGSS=-Wall -O0 -g -std=c11
 
 all: eSim
 
@@ -15,9 +16,9 @@ elevatorController/elevatorController.o:elevatorController/elevatorController.c
 		-c elevatorController/elevatorController.c \
 		${COPTS}
 
-eSim: src/elevatorGUI.cxx src/main.cxx elevatorController/elevatorController.o
+eSim: src/elevatorGUI.cxx src/main.cxx elevatorController/elevatorController.o src/elevator.o
 	${CXX} -I./ -I/usr/include -I./include \
-		src/elevatorGUI.cxx  src/main.cxx \
+		src/elevatorGUI.cxx  src/main.cxx src/elevator.o \
 		elevatorController/elevatorController.o \
 		-o eSim ${CXXOPTS} -lfltk
 

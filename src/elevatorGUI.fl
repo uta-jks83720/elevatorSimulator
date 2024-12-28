@@ -2,12 +2,11 @@
 version 1.0308
 header_name {.h}
 code_name {.cxx}
-class UserInterfaceElevator {open
-} {
+class UserInterfaceElevator {} {
   Function {make_window()} {open
   } {
     Fl_Window {} {
-      label elevatorSimulator open selected
+      label elevatorSimulator open
       xywh {699 134 580 590} type Double visible
     } {
       Fl_Pack {} {
@@ -154,5 +153,7 @@ class UserInterfaceElevator {open
         }
       }
     }
+  }
+  decl {\#include "elevator.h"} {selected private local
   }
 }
