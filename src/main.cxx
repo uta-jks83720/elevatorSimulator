@@ -2,13 +2,6 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
 
-//delete these
-#include "controls_to_elevator.h"
-#include "events_from_elevator.h"
-#include "indicators.h"
-#include "user_events.h"
-
-
 int main(int argc, char *argv[]) 
 {
   Fl_Window *window = new Fl_Window(300, 180);
