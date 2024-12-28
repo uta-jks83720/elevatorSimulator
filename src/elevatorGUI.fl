@@ -7,43 +7,140 @@ class UserInterfaceElevator {open
   Function {make_window()} {open
   } {
     Fl_Window {} {open
-      xywh {565 218 100 100} type Double visible
+      xywh {607 98 580 590} type Double visible
     } {
-      Fl_Group {} {open
-        xywh {25 25 15 15}
+      Fl_Pack {} {
+        label {Current Floor} open
+        xywh {280 25 80 65}
       } {
         Fl_Round_Button {} {
-          label button
-          xywh {30 30 70 20} down_box ROUND_DOWN_BOX
+          label 4
+          xywh {285 30 70 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Light_Button {} {
-          label button
-          xywh {30 30 74 20}
+        Fl_Round_Button {} {
+          label 3
+          xywh {285 50 70 20} down_box ROUND_DOWN_BOX
+        }
+        Fl_Round_Button {} {
+          label 2
+          xywh {285 70 70 20} down_box ROUND_DOWN_BOX
         }
       }
-      Fl_Group {} {open
-        xywh {25 25 15 15}
+      Fl_Group {} {
+        label {Floor 4} open
+        xywh {25 25 79 165}
       } {
-        Fl_Round_Button {} {
-          label button
-          xywh {30 30 70 20} down_box ROUND_DOWN_BOX
+        Fl_Light_Button {} {
+          label 2
+          xywh {27 130 74 20}
         }
         Fl_Light_Button {} {
-          label button
-          xywh {30 30 74 20}
+          label 4
+          xywh {27 90 74 20}
+        }
+        Fl_Light_Button {} {
+          label STOP
+          xywh {27 70 74 20}
+        }
+        Fl_Light_Button {} {
+          label DOOR
+          xywh {27 50 74 20}
+        }
+        Fl_Light_Button {} {
+          label 3
+          xywh {27 110 74 20}
+        }
+        Fl_Check_Button {} {
+          label {door obstructed}
+          xywh {25 170 70 20} down_box DOWN_BOX
         }
       }
-      Fl_Group {} {open selected
-        xywh {25 25 15 15}
+      Fl_Group {} {
+        label {Door Status} open
+        xywh {275 120 132 30}
       } {
-        Fl_Round_Button {} {
-          label button
-          xywh {30 30 70 20} down_box ROUND_DOWN_BOX
+        Fl_Progress {} {
+          label left
+          xywh {280 125 37 24}
+        }
+        Fl_Progress {} {
+          label right
+          xywh {370 126 37 24}
+        }
+      }
+      Fl_Group {} {
+        label {Floor 3} open
+        xywh {25 215 79 165}
+      } {
+        Fl_Light_Button {} {
+          label 2
+          xywh {27 320 74 20}
         }
         Fl_Light_Button {} {
-          label button
-          xywh {30 30 74 20}
+          label 4
+          xywh {27 280 74 20}
         }
+        Fl_Light_Button {} {
+          label STOP
+          xywh {27 260 74 20}
+        }
+        Fl_Light_Button {} {
+          label DOOR
+          xywh {27 240 74 20}
+        }
+        Fl_Light_Button {} {
+          label 3
+          xywh {27 300 74 20}
+        }
+        Fl_Check_Button {} {
+          label {door obstructed}
+          xywh {25 360 70 20} down_box DOWN_BOX
+        }
+      }
+      Fl_Group {} {
+        label {Floor 2} open
+        xywh {30 405 79 165}
+      } {
+        Fl_Light_Button {} {
+          label 2
+          xywh {32 510 74 20}
+        }
+        Fl_Light_Button {} {
+          label 4
+          xywh {32 470 74 20}
+        }
+        Fl_Light_Button {} {
+          label STOP
+          xywh {32 450 74 20}
+        }
+        Fl_Light_Button {} {
+          label DOOR
+          xywh {32 430 74 20}
+        }
+        Fl_Light_Button {} {
+          label 3
+          xywh {32 490 74 20}
+        }
+        Fl_Check_Button {} {
+          label {door obstructed}
+          xywh {30 550 70 20} down_box DOWN_BOX
+        }
+      }
+      Fl_Group {} {
+        label Power open
+        xywh {485 25 79 25}
+      } {
+        Fl_Light_Button {} {
+          xywh {490 30 74 20}
+        }
+      }
+      Fl_Box {} {
+        label label
+        xywh {220 210 225 20}
+      }
+      Fl_Slider {} {
+        label {slider:} selected
+        xywh {200 296 275 24} box THIN_UP_BOX
       }
     }
   }

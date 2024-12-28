@@ -1,16 +1,16 @@
+#include <string>
+
 #include <FL/Fl.H>
-#include <FL/Fl_Window.H>
+#include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Box.H>
+
+#include "elevatorGUI.h"
+
 
 int main(int argc, char *argv[]) 
 {
-  Fl_Window *window = new Fl_Window(300, 180);
-  Fl_Box *box = new Fl_Box(20, 40, 260, 100, "Hello World!");
-  //box->(FL_UP_BOX);
-  box->labelsize(36);
-  box->labelfont(FL_BOLD);
-  box->labeltype(FL_SHADOW_LABEL);
-  window->end();
-  window->show(argc, argv);
-  return Fl::run();
+	UserInterfaceElevator window = UserInterfaceElevator();
+	Fl_Window *w = window.make_window();
+	w->show(argc, argv);
+	return Fl::run();
 }
