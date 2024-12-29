@@ -21,6 +21,9 @@ void power_off();
 
 int power_status();
 
+int cab_position();
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -20,15 +20,15 @@ class UserInterfaceElevator {open
         label {Current Floor} open
         xywh {280 25 80 65} box BORDER_FRAME
       } {
-        Fl_Round_Button {} {
+        Fl_Round_Button currentFloor4 {
           label 4
           xywh {285 30 70 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button currentFloor3 {
           label 3
           xywh {285 50 70 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button currentFloor2 {
           label 2
           xywh {285 70 70 20} down_box ROUND_DOWN_BOX
         }
@@ -67,39 +67,39 @@ else
         label {Cab Position} open
         xywh {305 195 45 240} box BORDER_FRAME
       } {
-        Fl_Round_Button {} {
+        Fl_Round_Button pos40 {
           label 4
           xywh {305 200 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos38 {
           xywh {305 220 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos36 {
           xywh {305 240 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos34 {
           xywh {305 260 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos32 {
           xywh {305 280 45 20} box BORDER_FRAME down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos30 {
           label 3
           xywh {305 300 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos28 {
           xywh {305 320 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos26 {
           xywh {305 340 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos24 {
           xywh {305 360 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos22 {
           xywh {305 380 45 20} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button {} {
+        Fl_Round_Button pos20 {
           label 2
           xywh {305 400 45 20} down_box ROUND_DOWN_BOX
         }
@@ -170,10 +170,39 @@ else
       }
     }
   }
-  Function {guiTick()} {open selected return_type void
+  Function {guiTick()} {open return_type void
   } {
     code {timeBox->value(std::to_string(timeInSeconds()).c_str());} {}
     codeblock {if (power_status()) powerButton->label("ON"); else powerButton->label("OFF");} {open
     } {}
+    code {currentFloor2->value(0);
+currentFloor3->value(0);
+currentFloor4->value(0);
+if (cab_position()==20) currentFloor2->value(1);
+if (cab_position()==30) currentFloor3->value(1);
+if (cab_position()==40) currentFloor4->value(1);
+pos20->value(0);
+pos22->value(0);
+pos24->value(0);
+pos26->value(0);
+pos28->value(0);
+pos30->value(0);
+pos32->value(0);
+pos34->value(0);
+pos36->value(0);
+pos38->value(0);
+pos40->value(0);
+if (cab_position()==20) pos20->value(1);
+if (cab_position()==22) pos22->value(1);
+if (cab_position()==24) pos24->value(1);
+if (cab_position()==26) pos26->value(1);
+if (cab_position()==28) pos28->value(1);
+if (cab_position()==30) pos30->value(1);
+if (cab_position()==32) pos32->value(1);
+if (cab_position()==34) pos34->value(1);
+if (cab_position()==36) pos36->value(1);
+if (cab_position()==38) pos38->value(1);
+if (cab_position()==40) pos40->value(1);} {selected
+    }
   }
 }
