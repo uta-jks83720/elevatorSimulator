@@ -26,6 +26,10 @@
 
 
 // These functions are mandatory.  They must be implement with the same name and arguments
+void controller_tick()
+{
+}
+
 int some_function()
 {
 	return 0;

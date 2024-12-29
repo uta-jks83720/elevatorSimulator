@@ -2,12 +2,19 @@
 version 1.0308
 header_name {.h}
 code_name {.cxx}
-class UserInterfaceElevator {} {
+decl {\#include "elevator.h"} {public global
+}
+
+decl {\#include <string>} {public global
+}
+
+class UserInterfaceElevator {open
+} {
   Function {make_window()} {open
   } {
     Fl_Window {} {
       label elevatorSimulator open
-      xywh {699 134 580 590} type Double visible
+      xywh {699 134 580 590} type Double hide
     } {
       Fl_Pack {} {
         label {Current Floor} open
@@ -37,14 +44,23 @@ class UserInterfaceElevator {} {
       }
       Fl_Group {} {
         label Power open
-        xywh {485 25 84 100}
+        xywh {475 25 100 100}
       } {
-        Fl_Light_Button {} {
-          xywh {485 30 74 20}
-        }
-        Fl_Output {} {
+        Fl_Output timeBox {
           label TIME
-          xywh {485 67 70 28}
+          xywh {480 67 70 28} box FLAT_BOX
+        }
+        Fl_Button powerButton {
+          label null
+          callback {if (power_status())
+{
+     power_off();
+}
+else
+{
+   power_on();
+}}
+          xywh {475 25 70 35}
         }
       }
       Fl_Pack {} {
@@ -154,6 +170,10 @@ class UserInterfaceElevator {} {
       }
     }
   }
-  decl {\#include "elevator.h"} {selected private local
+  Function {guiTick()} {open selected return_type void
+  } {
+    code {timeBox->value(std::to_string(timeInSeconds()).c_str());} {}
+    codeblock {if (power_status()) powerButton->label("ON"); else powerButton->label("OFF");} {open
+    } {}
   }
 }

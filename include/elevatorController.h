@@ -8,7 +8,7 @@
 extern "C" 
 {
 #endif
-
+void controller_tick();
 
 
 

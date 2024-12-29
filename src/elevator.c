@@ -2,8 +2,8 @@
 
 #include "elevator.h"
 
-static unsigned int elapsedTime;
-static unsigned int power;
+static volatile unsigned int elapsedTime;
+static volatile unsigned int power;
 
 void init_elevator()
 {
@@ -11,9 +11,9 @@ void init_elevator()
     elapsedTime = 0;
     power = 0;
 }
-void tick()
+void elevator_tick()
 {
-    printf("hello\n");
+    printf("elevator tick called\n");
     if (power)
     {
         elapsedTime++;
@@ -27,12 +27,23 @@ unsigned int timeInSeconds()
 
 void power_on()
 {
-    init_elevator();
-    power = 1;
+    printf("power on called\n");
+    if (!power)
+    {
+       init_elevator();
+       power = 1;
+    }
 }
 
 void power_off()
 {
+    printf("power off called\n");
     power = 0;
+}
+
+int power_status()
+{
+        printf("power status called %d\n",power);
+        return power;
 }
 
