@@ -14,6 +14,8 @@
 // assignment, students are to re-implement the elevator controller
 // to meet the requirements (state diagram) of a previous assignment.
 //
+// This controller is limited in complexity, and is provided only to
+// demonstrate a working system.
 //
 // Specifics of this sample controller:
 //       1.  On power on, the elevator is initialized to the bottom floor (floor 2),
@@ -23,7 +25,8 @@
 //       4.  REQUEST or CALL is acknowledged with a light.
 //       4.  Once a CALL or a REQUEST is accepted, others are ignored until the elevator gets
 //           to the desired floor.
-
+//
+//
 
 
 // These functions are mandatory.  They must be implement with the same name and arguments
@@ -80,6 +83,12 @@ void CAB_POSITION_FLOOR_4()
 //
 typedef enum {OFF,FLOOR2,FLOOR3,FLOOR4,GOINGTO2,GOINGTO3,GOINGTO4} elevatorStateEnum;
 static volatile elevatorStateEnum currentState;
+char* elevatorStateEnumNames(elevatorStateEnum e)
+{
+	char *names[]= {"OFF","FLOOR2","FLOOR3","FLOOR4","GOINGTO2","GOINGTO3","GOINGTO4"};
+	assert (e >=OFF || e <= GOINGTO4);
+	return names[e];
+}
 
 void off_state_entry()
 {

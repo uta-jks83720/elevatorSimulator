@@ -5,7 +5,7 @@ COPTS=-Wall -O0 -g -std=c11
 CPPFLAGS=-I./ -I/usr/include -I./include
 CFLAGSS=-Wall -O0 -g -std=c11
 
-all: eSim
+all: eSim basicTest controllerTest1
 
 src/elevatorGUI.cxx: src/elevatorGUI.fl
 	fluid -o src/elevatorGUI.cxx -h src/elevatorGUI.h -c src/elevatorGUI.fl
@@ -22,6 +22,17 @@ eSim: src/elevatorGUI.cxx src/main.cxx elevatorController/elevatorController.o s
 		elevatorController/elevatorController.o \
 		-o eSim ${CXXOPTS} -lfltk
 
+basicTest: elevatorController/basicTest.c
+	${CC} -I./ -I/usr/include -I./include \
+		elevatorController/basicTest.c \
+		-o basicTest ${COPTS}
+
+controllerTest1: elevatorController/controllerTest1.c
+	${CC} -I./ -I/usr/include -I./include \
+		elevatorController/controllerTest1.c \
+		-o controllerTest1 ${COPTS}
+
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
-		elevatorController/elevatorController.o
+		elevatorController/elevatorController.o \
+		basicTest controllerTest1
