@@ -2,13 +2,13 @@
 #include <assert.h>
 
 #include "elevator.h"
-#include "events_from_elevator.h"
+//#include "events_from_elevator.h"
 #include "controls_to_elevator.h"
 
 #include "elevatorController.h"
 
 
-// these variables can be written to by another thread,
+// these variables can be written / read by another thread,
 // thus the volatile qualifier
 static volatile unsigned int elapsedTime; // seconds
 static volatile unsigned int power;       // 0 is off 1 is on
@@ -18,15 +18,18 @@ static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is nei
 static volatile int doorPosition;         // 0 is open, 5 is fully closed
 static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
 
+ 
 const char* ElevatorControlsEnumName(ElevatorControlsEnum e)
 {
 	const char* n[]={"POWER_ON","GO_UP","GO_DOWN","STOP","OPEN_DOOR","CLOSE_DOOR"};
 	return n[e];
 }
+ 
 
+ 
 void elevator_control(ElevatorControlsEnum e,int on)
 {
-        printf("elevator_control received by the elevator %s\n",ElevatorControlsEnumName);
+        printf("elevator_control received by the elevator %s\n",ElevatorControlsEnumName(e));
 	// controls to the elevator are recieved here
 	switch (e)
 	{
@@ -51,10 +54,11 @@ void elevator_control(ElevatorControlsEnum e,int on)
 	}
 }
 
-void event_to_elevator(elevatorEventEnum)
-{
-	// all events being sent to the elevator are received here.
-}
+
+//void event_to_elevator(elevatorEventEnum e)
+//{
+//	// all events being sent to the elevator are received here.
+//}
 
 
 void init_elevator()
