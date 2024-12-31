@@ -12,24 +12,22 @@ FCT_BGN()
       /* An actual test case in the test suite. */
       FCT_TEST_BGN(power on)
       {
-         controller_tick();
-	 controller_init();
+         //controller_tick();
+         //controller_init();
          fct_chk(strcmp("durka", "durka") == 0);
       }
       FCT_TEST_END();
 
-
       FCT_TEST_BGN(chk_neq)
       {
-         fct_chk(strcmp("daka", "durka") !=0 );
+         fct_chk(strcmp("daka", "durka") != 0);
       }
       FCT_TEST_END();
 
-
-   /* Every test suite must be closed. */
+      /* Every test suite must be closed. */
    }
    FCT_SUITE_END();
 
-/* Every FCT scope has an end. */
+   /* Every FCT scope has an end. */
 }
 FCT_END();

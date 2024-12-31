@@ -28,7 +28,7 @@ extern "C"
 
     void event_to_controller(eventEnum e);
 
-    const char* eventEnumName(eventEnum e);
+    const char *eventEnumName(eventEnum e);
 
 #ifdef __cplusplus
 }

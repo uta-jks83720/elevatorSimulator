@@ -7,7 +7,7 @@ CPPFLAGS=-I./ -I/usr/include -I./include
 CFLAGS=-Wall -O0 -g -std=c11
 
 #all: eSim basicTest controllerTest1 libevsim.a
-all: basicTest
+all: basicTest controllerTest1
 
 # create the GUI
 src/elevatorGUI.cxx: src/elevatorGUI.fl
@@ -15,11 +15,9 @@ src/elevatorGUI.cxx: src/elevatorGUI.fl
 
 # build the library of C files
 CFILES= \
-./elevatorController/controllerTest1.c \
-./elevatorController/basicTest.c \
-./elevatorController/elevatorController.c \
-./src/elevator.c \
-./src/events.c 
+          ./elevatorController/elevatorController.c \
+          ./src/elevator.c \
+          ./src/events.c 
 
 OBJFILES=${CFILES:.c=.o}
 
@@ -32,23 +30,19 @@ libevsim.a: ${OBJFILES}
 #		src/elevatorGUI.cxx  src/main.cxx   \
 #	 	-o eSim ${CXXOPTS} -levsim -lfltk
 
-basicTest: elevatorController/basicTest.c elevatorController/elevatorController.c ./src/elevator.o
-	${CC} -I./ -I/usr/include -I./include \
+basicTest: elevatorController/basicTest.c libevsim.a
+	${CC} ${CPPFLAGS} \
 		elevatorController/basicTest.c \
-		elevatorController/elevatorController.c \
-		src/elevator.o \
-		-o basicTest ${COPTS}
+		-o basicTest ${COPTS} -L./ -levsim
 
-#controllerTest1: elevatorController/controllerTest1.c elevatorController/elevatorController.c ./src/elevator.o
-#	${CC} -I./ -I/usr/include -I./include \
-#		elevatorController/controllerTest1.c \
-#		elevatorController/elevatorController.c \
-#		src/elevator.o \
-#		-o controllerTest1 ${COPTS}
+controllerTest1: elevatorController/controllerTest1.c libevsim.a
+	${CC} ${CPPFLAGS} \
+		elevatorController/controllerTest1.c \
+		-o controllerTest1 ${COPTS} -L./ -levsim
 
-#test: controllerTest1 basicTest
-#	./basicTest
-#	./controllerTest1
+test: controllerTest1 basicTest
+	./basicTest
+	./controllerTest1
 
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
