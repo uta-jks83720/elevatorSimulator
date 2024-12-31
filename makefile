@@ -22,15 +22,23 @@ eSim: src/elevatorGUI.cxx src/main.cxx elevatorController/elevatorController.o s
 		elevatorController/elevatorController.o \
 		-o eSim ${CXXOPTS} -lfltk
 
-basicTest: elevatorController/basicTest.c
+basicTest: elevatorController/basicTest.c elevatorController/elevatorController.c ./src/elevator.o
 	${CC} -I./ -I/usr/include -I./include \
 		elevatorController/basicTest.c \
+		elevatorController/elevatorController.c \
+		src/elevator.o \
 		-o basicTest ${COPTS}
 
-controllerTest1: elevatorController/controllerTest1.c
+controllerTest1: elevatorController/controllerTest1.c elevatorController/elevatorController.c ./src/elevator.o
 	${CC} -I./ -I/usr/include -I./include \
 		elevatorController/controllerTest1.c \
+		elevatorController/elevatorController.c \
+		src/elevator.o \
 		-o controllerTest1 ${COPTS}
+
+test: controllerTest1 basicTest
+	./basicTest
+	./controllerTest1
 
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \

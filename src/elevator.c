@@ -1,7 +1,11 @@
 #include <stdio.h>
+#include <assert.h>
 
 #include "elevator.h"
 #include "events_from_elevator.h"
+#include "controls_to_elevator.h"
+
+#include "elevatorController.h"
 
 
 // these variables can be written to by another thread,
@@ -14,13 +18,52 @@ static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is nei
 static volatile int doorPosition;         // 0 is open, 5 is fully closed
 static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
 
+const char* ElevatorControlsEnumName(ElevatorControlsEnum e)
+{
+	const char* n[]={"POWER_ON","GO_UP","GO_DOWN","STOP","OPEN_DOOR","CLOSE_DOOR"};
+	return n[e];
+}
+
+void elevator_control(ElevatorControlsEnum e,int on)
+{
+        printf("elevator_control received by the elevator %s\n",ElevatorControlsEnumName);
+	// controls to the elevator are recieved here
+	switch (e)
+	{
+                case POWER_ON:
+                        break;
+                case GO_UP:
+                        cabDirection = on ? 1: 0;
+                        break;
+                case GO_DOWN:
+                        cabDirection = on ? -1: 0;
+                        break;
+		case STOP:
+                        cabDirection = on ? 0: cabDirection;
+			break;
+		case OPEN_DOOR:
+                        doorDirection = on ? 1: 0;
+                        break;
+		case CLOSE_DOOR:
+                        doorDirection = on ? -1: 0;
+                        break;
+                default:assert(0);
+	}
+}
+
+void event_to_elevator(elevatorEventEnum)
+{
+	// all events being sent to the elevator are received here.
+}
+
+
 void init_elevator()
 {
         // this function is called to initialize the simulated elevator
         elapsedTime = 0;
         power = 0;
         cabPosition = 20; // ground floor
-        cabDirection = 1; // not moving
+        cabDirection = 0; // not moving
         doorPosition = 5; // closed
         doorDirection = 0;
 }
@@ -61,6 +104,7 @@ void elevator_tick()
         // deal with the door
         if (doorDirection==0)
         {
+		; // it is where it should be, and is not moving
         }
         else if (doorDirection==1)
         {
@@ -78,8 +122,6 @@ void elevator_tick()
         }
 
 
-
-
         //////////////////////////////////////////////
         // generate any events for the elevator controller
         // these events are only generated once, each time they 
@@ -88,11 +130,11 @@ void elevator_tick()
         {
                 if (doorPosition==1)
                 {
-                        DOOR_IS_OPEN();
+			event_to_controller(DOOR_IS_OPEN);
                 }
                 else if (doorPosition==5)
                 {
-                        DOOR_IS_CLOSED();
+                        event_to_controller(DOOR_IS_CLOSED);
                 }
         }
         // figure this out.... DOOR_IS_OBSTRUCTED();
@@ -101,23 +143,23 @@ void elevator_tick()
         {
                 if (cabPosition == 20)
                 {
-                        CAB_POSITION_FLOOR_2();
+                        event_to_controller(CAB_POSITION_FLOOR_2);
                 }
                 else if (cabPosition == 25)
                 {
-                        CAB_POSITION_FLOOR_2_5();
+                        event_to_controller(CAB_POSITION_FLOOR_2_5);
                 }
                 else if (cabPosition == 30)
                 {
-                        CAB_POSITION_FLOOR_3();
+                        event_to_controller(CAB_POSITION_FLOOR_3);
                 }
                 else if (cabPosition == 35)
                 {
-                        CAB_POSITION_FLOOR_3_5();
+                        event_to_controller(CAB_POSITION_FLOOR_3_5);
                 }
                 else if (cabPosition == 40)
                 {
-                        CAB_POSITION_FLOOR_4();
+                        event_to_controller(CAB_POSITION_FLOOR_4);
                 }       
         } // cab is moving
 
@@ -134,6 +176,7 @@ void power_on()
         if (!power)
         {
                 init_elevator();
+                event_to_controller(POWER_ON);
                 power = 1;
         }
 }

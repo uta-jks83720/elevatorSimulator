@@ -2,14 +2,18 @@
 #include "fct.h"
 #include <string.h>
 
+#include "elevatorController.h"
+
 FCT_BGN()
 {
    /* A simple test case. No setup/teardown. */
-   FCT_SUITE_BGN(simple)
+   FCT_SUITE_BGN(transitions)
    {
       /* An actual test case in the test suite. */
-      FCT_TEST_BGN(strcmp_eq)
+      FCT_TEST_BGN(power on)
       {
+         controller_tick();
+	 controller_init();
          fct_chk(strcmp("durka", "durka") == 0);
       }
       FCT_TEST_END();
