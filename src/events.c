@@ -2,7 +2,6 @@
 
 #include "events.h"
 
-
 const char *eventEnumName(eventEnum e)
 {
     const char *n[] = {"DOOR_IS_OPEN", "DOOR_IS_CLOSED",
@@ -22,5 +21,7 @@ const char *eventEnumName(eventEnum e)
                        "REQ_FLOOR_4",
                        "REQ_BELL_PRESSED",
                        "REQ_BELL_RELEASED"};
+
+    assert(e >= DOOR_IS_OPEN && e <= REQ_BELL_RELEASED);
     return n[e];
 }
