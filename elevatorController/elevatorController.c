@@ -6,7 +6,7 @@
 // This is an example elevator controller.  As part of the
 // assignment, students are to re-implement the elevator controller
 // to meet the requirements (state diagram) of a previous assignment.
-//
+
 // This controller is limited in complexity, and is provided only to
 // demonstrate a working system.
 //
@@ -18,8 +18,6 @@
 //       4.  REQUEST or CALL is acknowledged with a light.
 //       5.  Once a CALL or a REQUEST is accepted, others are ignored until the
 //           elevator gets to the desired floor.
-//
-//
 
 static elevatorStateEnum currentState;
 
@@ -40,7 +38,7 @@ void (*on_entry[GOINGDNTO2 + 1])() = {off_state_entry, floor2_state_entry, floor
 
 typedef struct
 {
-	bool active;
+	bool active; // this entry is ignored if active is false
 	elevatorStateEnum nextState;
 } stateInfo_t;
 
@@ -119,32 +117,6 @@ void controller_init() // also the power on event
 	printf("controller_init event\n");
 	currentState = FLOOR2;
 }
-
-/*
-FLOOR2 : entry- GO_UP=F\n GO_DOWN=F\n OPEN_DOOR=F \n CLOSE_DOOR=F
-FLOOR3 : entry- GO_UP=F\n GO_DOWN=F\n OPEN_DOOR=F \n CLOSE_DOOR=F
-FLOOR4 : entry- GO_UP=F\n GO_DOWN=F\n OPEN_DOOR=F \n CLOSE_DOOR=F
-GOINGUPTO3 : entry- GO_UP=T\n GO_DOWN=F\n OPEN_DOOR=F \n CLOSE_DOOR=F
-GOINGDNTO3 : entry- GO_UP=F\n GO_DOWN=T\n OPEN_DOOR=F \n CLOSE_DOOR=F
-GOINGUPTO4 : entry- GO_UP=T\n GO_DOWN=F\n OPEN_DOOR=F \n CLOSE_DOOR=F
-GOINGDNTO2 : entry- GO_UP=F\n GO_DOWN=T\n OPEN_DOOR=F \n CLOSE_DOOR=F
-FLOOR2 --> GOINGUPTO3 : CALL_FLOOR_3()
-FLOOR2 --> GOINGUPTO4 : CALL_FLOOR_4()
-FLOOR2 --> GOINGUPTO3 : REQ_FLOOR_3()
-FLOOR2 --> GOINGUPTO4 : REQ_FLOOR_4()
-FLOOR3 --> GOINGDNTO2 : CALL_FLOOR_2()
-FLOOR3 --> GOINGUPTO4 : CALL_FLOOR_4()
-FLOOR3 --> GOINGDNTO2 : REQCALL_FLOOR_2()
-FLOOR3 --> GOINGUPTO4 : REQ_FLOOR_4()
-FLOOR4 --> GOINGDNTO2 : CALL_FLOOR_2()
-FLOOR4 --> GOINGDNTO2 : REQ_FLOOR_2()
-FLOOR4 --> GOINGDNTO3 : CALL_FLOOR_3()
-FLOOR4 --> GOINGDNTO3 : REQ_FLOOR_3()
-GOINGDNTO2 -->FLOOR2 : CAB_POSITION_FLOOR_2()
-GOINGDNTO3 -->FLOOR3 : CAB_POSITION_FLOOR_3()
-GOINGUPTO3 -->FLOOR3 : CAB_POSITION_FLOOR_3()
-GOINGUPTO4 -->FLOOR4 : CAB_POSITION_FLOOR_4()
-*/
 
 void off_state_entry()
 {
