@@ -2,6 +2,7 @@
 #include <string.h>
 #include <assert.h>
 
+#include "debug.h"
 #include "elevator.h"
 #include "elevatorController.h"
 
@@ -82,7 +83,7 @@ void init_elevator()
 
 void elevator_tick()
 {
-        printf("elevator tick called\n");
+        DEBUG_PRINT("elevator tick called\n");
         if (power)
         {
                 printf("cab direction %d\n", cabDirection);

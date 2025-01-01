@@ -2,10 +2,10 @@
 
 CC=gcc
 CXX=g++
-CXXOPTS=-Wall -O0 -g -std=c++11
+CXXOPTS=-Wall -O0 -g -std=c++11 -DDEBUG
 COPTS=-Wall -O0 -g -std=c11
 CPPFLAGS=-I./ -I/usr/include -I./include
-CFLAGS=-Wall -O0 -g -std=c11
+CFLAGS=-Wall -O0 -g -std=c11 -DDEBUG
 AR=ar
  
 all: basicTest controllerTest1 eSim
