@@ -1,13 +1,14 @@
 # this makefile is ran from the root of the project
+
 CC=gcc
 CXX=g++
-CXXOPTS=-Wall -O0 -g
+CXXOPTS=-Wall -O0 -g -std=c++11
 COPTS=-Wall -O0 -g -std=c11
 CPPFLAGS=-I./ -I/usr/include -I./include
 CFLAGS=-Wall -O0 -g -std=c11
-
-#all: eSim basicTest controllerTest1 libevsim.a
-all: basicTest controllerTest1
+AR=ar
+ 
+all: basicTest controllerTest1 eSim
 
 # create the GUI
 src/elevatorGUI.cxx: src/elevatorGUI.fl
@@ -22,13 +23,13 @@ CFILES= \
 OBJFILES=${CFILES:.c=.o}
 
 libevsim.a: ${OBJFILES}
-	ar rcs libevsim.a ${OBJFILES}
+	${AR} rcs libevsim.a ${OBJFILES}
   
 
-#eSim: src/elevatorGUI.cxx src/main.cxx elevatorController/elevatorController.o src/elevator.o
-#	${CXX} -I./ -I/usr/include -I./include \
-#		src/elevatorGUI.cxx  src/main.cxx   \
-#	 	-o eSim ${CXXOPTS} -levsim -lfltk
+eSim: src/elevatorGUI.cxx src/main.cxx libevsim.a
+	${CXX} ${CPPFLAGS} \
+		src/elevatorGUI.cxx  src/main.cxx   \
+	 	-o eSim ${CXXOPTS} -L./ -levsim -lfltk
 
 basicTest: elevatorController/basicTest.c libevsim.a
 	${CC} ${CPPFLAGS} \
@@ -46,6 +47,5 @@ test: controllerTest1 basicTest
 
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
-		elevatorController/elevatorController.o \
 		${OBJFILES} libevsim.a \
 		basicTest controllerTest1

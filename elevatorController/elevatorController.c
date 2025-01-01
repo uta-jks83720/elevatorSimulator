@@ -19,7 +19,7 @@
 //       5.  Once a CALL or a REQUEST is accepted, others are ignored until the
 //           elevator gets to the desired floor.
 
-static elevatorStateEnum currentState;
+static volatile elevatorStateEnum currentState;
 
 // each state has an "on entry" function.
 // the are declared here so they can be available in the
@@ -92,23 +92,27 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 		if (on_entry[nextState])
 		{
 			printf("calling on_entry function\n");
+			assert(on_entry[state]);
 			(on_entry[state])();
 		}
 	}
 
 	printf("current state = %s", elevatorStateEnumNames(state));
-	printf(" new state = %s", elevatorStateEnumNames(nextState));
+	printf(" new state = %s\n", elevatorStateEnumNames(nextState));
 	return nextState;
 }
 
 void event_to_controller(eventEnum e)
 {
-	// printf("in event to controller %s\n", eventEnum(e));
+	printf("event to controller %s\n", eventEnumName(e));
+	// all events are processed in this function
+	currentState=transition(currentState,e);
 }
 
 // These functions are mandatory.  They must be implement with the same name and arguments
 void controller_tick()
 {
+	printf("controller tick\n");
 	// this is where timers are handled
 }
 
@@ -116,6 +120,7 @@ void controller_init() // also the power on event
 {
 	printf("controller_init event\n");
 	currentState = FLOOR2;
+	// clear all timers
 }
 
 void off_state_entry()
