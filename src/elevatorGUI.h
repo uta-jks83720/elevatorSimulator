@@ -4,6 +4,7 @@
 #define elevatorGUI_h
 #include <FL/Fl.H>
 #include "elevator.h"
+#include "events.h"
 #include <string>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Pack.H>
@@ -39,6 +40,14 @@ public:
   Fl_Round_Button *pos24;
   Fl_Round_Button *pos22;
   Fl_Round_Button *pos20;
+private:
+  inline void cb_4_i(Fl_Button*, void*);
+  static void cb_4(Fl_Button*, void*);
+  inline void cb_3_i(Fl_Button*, void*);
+  static void cb_3(Fl_Button*, void*);
+  inline void cb_2_i(Fl_Button*, void*);
+  static void cb_2(Fl_Button*, void*);
+public:
   void guiTick();
 };
 #endif

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 #include "elevator.h"
@@ -7,8 +8,6 @@
 // Simulaton of the actual, physical elevator is done in this
 // module.
 
-
-
 // these variables can be written / read by another thread,
 // thus the volatile qualifier
 static volatile unsigned int elapsedTime; // seconds
@@ -16,36 +15,58 @@ static volatile unsigned int power;       // 0 is off 1 is on
 static volatile unsigned int cabPosition; // 20 to 40.  20 is the second floor,
                                           // 30 is the third floor, etc.
 static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is neither
-static volatile int doorPosition;         // 0 is open, 5 is fully closed
+static volatile int doorPosition;         //  0 is open, 5 is fully closed
 static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
 
-void elevator_control(ElevatorControlsEnum e, int on)
+int elevator_control_cmd(unsigned int c)
 {
-        printf("Control received by the elevator %s\n", ElevatorControlsEnumName(e));
+        printf("Control received by the elevator %x\n", c);
+#define ALL_OFF 0x000000000
+#define POWER_ON 0x00000001
+#define GO_UP 0x00000002
+#define GO_DOWN 0x00000004
+#define STOP 0x00000008
+#define OPEN_DOOR 0x00000010
+#define CLOSE_DOOR 0x00000020
 
         // controls to the elevator are recieved here
-        switch (e)
+        //    cabDirection
+        if (__builtin_popcount(c & (GO_UP | GO_DOWN | STOP)) > 1)
         {
-        case POWER_ON:
-                break;
-        case GO_UP:
-                cabDirection = on ? 1 : 0;
-                break;
-        case GO_DOWN:
-                cabDirection = on ? -1 : 0;
-                break;
-        case STOP:
-                cabDirection = on ? 0 : cabDirection;
-                break;
-        case OPEN_DOOR:
-                doorDirection = on ? 1 : 0;
-                break;
-        case CLOSE_DOOR:
-                doorDirection = on ? -1 : 0;
-                break;
-        default:
-                assert(0);
+                printf("invalid command %x", c);
+                return -1;
         }
+
+        cabDirection = 0;
+        if (c & GO_UP)
+        {
+                cabDirection = 1;
+        }
+        if (c & GO_DOWN)
+        {
+                cabDirection = -1;
+        }
+        if (c & STOP)
+        {
+                cabDirection = 0;
+        }
+
+        //    doorDirection
+        doorDirection = 0;
+        if (__builtin_popcount(c & (OPEN_DOOR | CLOSE_DOOR)) > 1)
+        {
+                printf("invalid command %x", c);
+                return -1;
+        }
+        if (c & OPEN_DOOR)
+        {
+                doorDirection = 1;
+        }
+        if (c & CLOSE_DOOR)
+        {
+                doorDirection = -1;
+        }
+        return 0;
 }
 
 void init_elevator()
@@ -64,6 +85,8 @@ void elevator_tick()
         printf("elevator tick called\n");
         if (power)
         {
+                printf("cab direction %d\n", cabDirection);
+                printf("cab position %d\n", cabPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;
@@ -167,6 +190,7 @@ void power_on()
         if (!power)
         {
                 init_elevator();
+                controller_init();
                 event_to_controller(POWER_ON);
                 power = 1;
         }
@@ -185,11 +209,4 @@ int power_status()
 int cab_position()
 {
         return cabPosition;
-}
-
-const char *ElevatorControlsEnumName(ElevatorControlsEnum e)
-{
-        const char *n[] = {"POWER_ON", "GO_UP", "GO_DOWN", "STOP", "OPEN_DOOR", "CLOSE_DOOR"};
-        assert(e >= POWER_ON && e <= CLOSE_DOOR);
-        return n[e];
 }

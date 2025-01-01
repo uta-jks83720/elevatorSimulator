@@ -16,6 +16,33 @@ void UserInterfaceElevator::cb_powerButton(Fl_Button* o, void* v) {
   ((UserInterfaceElevator*)(o->parent()->parent()->user_data()))->cb_powerButton_i(o,v);
 }
 
+void UserInterfaceElevator::cb_4_i(Fl_Button*, void*) {
+  eventEnum event;
+event=CALL_FLOOR_4;
+event_to_controller(event);
+}
+void UserInterfaceElevator::cb_4(Fl_Button* o, void* v) {
+  ((UserInterfaceElevator*)(o->parent()->parent()->user_data()))->cb_4_i(o,v);
+}
+
+void UserInterfaceElevator::cb_3_i(Fl_Button*, void*) {
+  eventEnum event;
+event=CALL_FLOOR_3;
+event_to_controller(event);
+}
+void UserInterfaceElevator::cb_3(Fl_Button* o, void* v) {
+  ((UserInterfaceElevator*)(o->parent()->parent()->user_data()))->cb_3_i(o,v);
+}
+
+void UserInterfaceElevator::cb_2_i(Fl_Button*, void*) {
+  eventEnum event;
+event=CALL_FLOOR_2;
+event_to_controller(event);
+}
+void UserInterfaceElevator::cb_2(Fl_Button* o, void* v) {
+  ((UserInterfaceElevator*)(o->parent()->parent()->user_data()))->cb_2_i(o,v);
+}
+
 Fl_Double_Window* UserInterfaceElevator::make_window() {
   Fl_Double_Window* w;
   { Fl_Double_Window* o = new Fl_Double_Window(630, 445, "elevatorSimulator");
@@ -114,11 +141,14 @@ Fl_Double_Window* UserInterfaceElevator::make_window() {
       o->end();
     } // Fl_Pack* o
     { Fl_Group* o = new Fl_Group(345, 235, 215, 220, "Cab Controls and Indicators");
-      { new Fl_Button(370, 260, 70, 20, "4");
+      { Fl_Button* o = new Fl_Button(370, 260, 70, 20, "4");
+        o->callback((Fl_Callback*)cb_4);
       } // Fl_Button* o
-      { new Fl_Button(370, 290, 70, 20, "3");
+      { Fl_Button* o = new Fl_Button(370, 290, 70, 20, "3");
+        o->callback((Fl_Callback*)cb_3);
       } // Fl_Button* o
-      { new Fl_Button(370, 320, 70, 20, "2");
+      { Fl_Button* o = new Fl_Button(370, 320, 70, 20, "2");
+        o->callback((Fl_Callback*)cb_2);
       } // Fl_Button* o
       { new Fl_Button(370, 365, 70, 20, "Door");
       } // Fl_Button* o

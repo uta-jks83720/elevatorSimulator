@@ -5,6 +5,9 @@ code_name {.cxx}
 decl {\#include "elevator.h"} {public global
 }
 
+decl {\#include "events.h"} {public global
+}
+
 decl {\#include <string>} {public global
 }
 
@@ -38,7 +41,7 @@ class UserInterfaceElevator {open
         xywh {415 165 135 25}
       } {
         Fl_Progress {} {
-          label unknown selected
+          label unknown
           xywh {420 165 130 24}
         }
       }
@@ -153,14 +156,23 @@ else
       } {
         Fl_Button {} {
           label 4
+          callback {eventEnum event;
+event=CALL_FLOOR_4;
+event_to_controller(event);} selected
           xywh {370 260 70 20}
         }
         Fl_Button {} {
           label 3
+          callback {eventEnum event;
+event=CALL_FLOOR_3;
+event_to_controller(event);}
           xywh {370 290 70 20}
         }
         Fl_Button {} {
           label 2
+          callback {eventEnum event;
+event=CALL_FLOOR_2;
+event_to_controller(event);}
           xywh {370 320 70 20}
         }
         Fl_Button {} {

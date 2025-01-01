@@ -92,8 +92,8 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 		if (on_entry[nextState])
 		{
 			printf("calling on_entry function\n");
-			assert(on_entry[state]);
-			(on_entry[state])();
+			assert(on_entry[nextState]);
+			(on_entry[nextState])();
 		}
 	}
 
@@ -104,84 +104,82 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 
 void event_to_controller(eventEnum e)
 {
+	printf("%s\n", __FUNCTION__);
 	printf("event to controller %s\n", eventEnumName(e));
 	// all events are processed in this function
-	currentState=transition(currentState,e);
+	currentState = transition(currentState, e);
 }
 
 // These functions are mandatory.  They must be implement with the same name and arguments
 void controller_tick()
 {
-	printf("controller tick\n");
+	printf("%s\n", __FUNCTION__);
+
 	// this is where timers are handled
 }
 
 void controller_init() // also the power on event
 {
-	printf("controller_init event\n");
+	printf("%s\n", __FUNCTION__);
+
 	currentState = FLOOR2;
 	// clear all timers
 }
 
 void off_state_entry()
 {
-	// assert(0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = ALL_OFF;
+	elevator_control_cmd(eCmd);
 }
 
 void floor2_state_entry()
 {
-	elevator_control(GO_UP, 0);
-	elevator_control(GO_DOWN, 0);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = ALL_OFF;
+	elevator_control_cmd(eCmd);
 }
 
 void floor3_state_entry()
 {
-	elevator_control(GO_UP, 0);
-	elevator_control(GO_DOWN, 0);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = ALL_OFF;
+	elevator_control_cmd(eCmd);
 }
 
 void floor4_state_entry()
 {
-	elevator_control(GO_UP, 0);
-	elevator_control(GO_DOWN, 0);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = ALL_OFF;
+	elevator_control_cmd(eCmd);
 }
 
 void goingdnto2_state_entry()
 {
-	elevator_control(GO_UP, 0);
-	elevator_control(GO_DOWN, 1);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = GO_DOWN;
+	elevator_control_cmd(eCmd);
 }
 
 void goingdnto3_state_entry()
 {
-	elevator_control(GO_UP, 0);
-	elevator_control(GO_DOWN, 1);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = GO_DOWN;
+	elevator_control_cmd(eCmd);
 }
 
 void goingupto3_state_entry()
 {
-	elevator_control(GO_UP, 1);
-	elevator_control(GO_DOWN, 0);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = GO_UP;
+	elevator_control_cmd(eCmd);
 }
 
 void goingupto4_state_entry()
 {
-	elevator_control(GO_UP, 1);
-	elevator_control(GO_DOWN, 0);
-	elevator_control(OPEN_DOOR, 0);
-	elevator_control(CLOSE_DOOR, 0);
+	printf("%s\n", __FUNCTION__);
+	int eCmd = GO_UP;
+	elevator_control_cmd(eCmd);
 }
 
 const char *elevatorStateEnumNames(elevatorStateEnum e)
