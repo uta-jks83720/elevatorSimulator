@@ -21,20 +21,13 @@ static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is 
 
 int elevator_control_cmd(unsigned int c)
 {
-        printf("Control received by the elevator %x\n", c);
-#define ALL_OFF 0x000000000
-#define POWER_ON 0x00000001
-#define GO_UP 0x00000002
-#define GO_DOWN 0x00000004
-#define STOP 0x00000008
-#define OPEN_DOOR 0x00000010
-#define CLOSE_DOOR 0x00000020
-
+        DEBUG_PRINT("cmd = %x\n", c);
         // controls to the elevator are recieved here
+
         //    cabDirection
         if (__builtin_popcount(c & (GO_UP | GO_DOWN | STOP)) > 1)
         {
-                printf("invalid command %x", c);
+                ERROR_PRINT("invalid command %x\n", c);
                 return -1;
         }
 
@@ -56,7 +49,7 @@ int elevator_control_cmd(unsigned int c)
         doorDirection = 0;
         if (__builtin_popcount(c & (OPEN_DOOR | CLOSE_DOOR)) > 1)
         {
-                printf("invalid command %x", c);
+                ERROR_PRINT("invalid command %x\n", c);
                 return -1;
         }
         if (c & OPEN_DOOR)
@@ -192,7 +185,7 @@ void power_on()
         {
                 init_elevator();
                 controller_init();
-                event_to_controller(POWER_ON);
+                // event_to_controller(POWER_ON);
                 power = 1;
         }
 }

@@ -41,8 +41,14 @@ basicTest: elevatorController/basicTest.c libevsim.a
 #		elevatorController/controllerTest1.c \
 #		-o controllerTest1 ${COPTS} -L./ -levsim
 
-test: basicTest #controllerTest1
+basicElevatorTest: src/basicElevatorTest.c libevsim.a
+	${CC} ${CPPFLAGS} \
+		src/basicElevatorTest.c \
+		-o basicElevatorTest ${COPTS} -L./ -levsim
+
+test: basicTest basicElevatorTest #controllerTest1
 	./basicTest
+	./basicElevatorTest
 #	./controllerTest1
 
 clean:
