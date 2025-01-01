@@ -41,7 +41,7 @@ basicTest: elevatorController/basicTest.c libevsim.a
 #		elevatorController/controllerTest1.c \
 #		-o controllerTest1 ${COPTS} -L./ -levsim
 
-test: controllerTest1 basicTest
+test: basicTest #controllerTest1
 	./basicTest
 #	./controllerTest1
 
