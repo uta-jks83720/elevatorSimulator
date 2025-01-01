@@ -7,13 +7,15 @@
 #pragma once
 
 #include <stdbool.h>
-#include "controls_to_elevator.h"
+ 
 #include "events.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
+// States of the elevator system
 
     typedef enum
     {

@@ -17,7 +17,7 @@ class UserInterfaceElevator {open
   } {
     Fl_Window {} {
       label elevatorSimulator open
-      xywh {402 97 630 445} type Double visible
+      xywh {596 102 630 445} type Double visible
     } {
       Fl_Pack {} {
         label {Current Floor} open
@@ -158,7 +158,7 @@ else
           label 4
           callback {eventEnum event;
 event=CALL_FLOOR_4;
-event_to_controller(event);} selected
+event_to_controller(event);}
           xywh {370 260 70 20}
         }
         Fl_Button {} {
@@ -179,13 +179,13 @@ event_to_controller(event);}
           label Door
           xywh {370 365 70 20}
         }
-        Fl_Text_Display {} {
+        Fl_Text_Display REQ4 {
           xywh {465 260 50 30}
         }
-        Fl_Text_Display {} {
+        Fl_Text_Display REQ3 {
           xywh {465 290 50 30}
         }
-        Fl_Text_Display {} {
+        Fl_Text_Display REQ2 {
           xywh {465 320 50 30}
         }
       }
@@ -223,6 +223,7 @@ if (cab_position()==32) pos32->value(1);
 if (cab_position()==34) pos34->value(1);
 if (cab_position()==36) pos36->value(1);
 if (cab_position()==38) pos38->value(1);
-if (cab_position()==40) pos40->value(1);} {}
+if (cab_position()==40) pos40->value(1);} {selected
+    }
   }
 }

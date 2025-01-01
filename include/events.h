@@ -30,6 +30,56 @@ extern "C"
 
     const char *eventEnumName(eventEnum e);
 
+    /*
+
+    Elevator Controls are sent to the elevator in a single 32 bit word
+    with the apropriate bits set.
+
+    You must provide all of the controls, each time the command is sent.
+    Commands that contradict, like GO_UP and GO_DOWN set at the same time
+    will cause an error.
+
+    */
+
+#define ALL_OFF 0x000000000
+#define GO_UP 0x00000002
+#define GO_DOWN 0x00000004
+#define STOP 0x00000008
+#define OPEN_DOOR 0x00000010
+#define CLOSE_DOOR 0x00000020
+#define STOP_DOOR 0x00000040
+
+    int elevator_control_cmd(unsigned int);
+
+    /*
+
+    Indicators are display devices on either the elevator cab or on the panels
+    installed on each floor.
+
+    They are like commands, in that you send a single 32 bit word, and the bits set
+    define what is turned on.
+
+    */
+
+#define CALL_ACCEPTED_FLOOR_2 0x00000001
+#define CALL_ACCEPTED_FLOOR_3 0x00000002
+#define CALL_ACCEPTED_FLOOR_4 0x00000004
+#define UPPTAGEN_FLOOR_2 0x00000008
+#define UPPTAGEN_FLOOR_3 0x00000010
+#define UPPTAGEN_FLOOR_4 0x00000020
+#define REQ_FLOOR_ACCEPTED_2 0x00000040
+#define REQ_FLOOR_ACCEPTED_3 0x00000080
+#define REQ_FLOOR_ACCEPTED_4 0x00000100
+#define CAB_POS_2 0x00000200
+#define CAB_POS_3 0x00000400
+#define CAB_POS_4 0x00000800
+#define POS_FLOOR_2 0x00001000
+#define POS_FLOOR_3 0x00002000
+#define POS_FLOOR_4 0x00004000
+#define RING_BELL 0x00008000
+
+    int elevator_indicators(unsigned int);
+
 #ifdef __cplusplus
 }
 #endif

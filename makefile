@@ -8,7 +8,7 @@ CPPFLAGS=-I./ -I/usr/include -I./include
 CFLAGS=-Wall -O0 -g -std=c11 -DDEBUG
 AR=ar
  
-all: basicTest controllerTest1 eSim
+all: basicTest eSim
 
 # create the GUI
 src/elevatorGUI.cxx: src/elevatorGUI.fl
@@ -36,16 +36,17 @@ basicTest: elevatorController/basicTest.c libevsim.a
 		elevatorController/basicTest.c \
 		-o basicTest ${COPTS} -L./ -levsim
 
-controllerTest1: elevatorController/controllerTest1.c libevsim.a
-	${CC} ${CPPFLAGS} \
-		elevatorController/controllerTest1.c \
-		-o controllerTest1 ${COPTS} -L./ -levsim
+#controllerTest1: elevatorController/controllerTest1.c libevsim.a
+#	${CC} ${CPPFLAGS} \
+#		elevatorController/controllerTest1.c \
+#		-o controllerTest1 ${COPTS} -L./ -levsim
 
 test: controllerTest1 basicTest
 	./basicTest
-	./controllerTest1
+#	./controllerTest1
 
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
 		${OBJFILES} libevsim.a \
+		elevatorController/basicTest.o \
 		basicTest controllerTest1

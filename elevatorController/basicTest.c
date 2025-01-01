@@ -6,7 +6,7 @@
 
 FCT_BGN()
 {
-   /* A simple test case. No setup/teardown. */
+    
    FCT_SUITE_BGN(elevator controller unit tests)
    {
 
