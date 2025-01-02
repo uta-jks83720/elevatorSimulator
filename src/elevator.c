@@ -79,8 +79,7 @@ void elevator_tick()
         DEBUG_PRINT("elevator tick called\n");
         if (power)
         {
-                printf("cab direction %d\n", cabDirection);
-                printf("cab position %d\n", cabPosition);
+                DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;

@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "debug.h"
 #include "elevatorController.h"
 
 // This is an example elevator controller.  As part of the
@@ -91,21 +92,19 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 
 		if (on_entry[nextState])
 		{
-			printf("calling on_entry function\n");
 			assert(on_entry[nextState]);
 			(on_entry[nextState])();
 		}
 	}
 
-	printf("current state = %s", elevatorStateEnumNames(state));
-	printf(" new state = %s\n", elevatorStateEnumNames(nextState));
+	INFO_PRINT("current state = %s", elevatorStateEnumNames(state));
+	INFO_PRINT("new state = %s\n", elevatorStateEnumNames(nextState));
 	return nextState;
 }
 
 void event_to_controller(eventEnum e)
 {
-	printf("%s\n", __FUNCTION__);
-	printf("event to controller %s\n", eventEnumName(e));
+	INFO_PRINT("event to controller %s\n", eventEnumName(e));
 	// all events are processed in this function
 	currentState = transition(currentState, e);
 }
@@ -113,9 +112,8 @@ void event_to_controller(eventEnum e)
 // These functions are mandatory.  They must be implement with the same name and arguments
 void controller_tick()
 {
-	printf("%s\n", __FUNCTION__);
-
 	// this is where timers are handled
+	DEBUG_PRINT("controller tick\n");
 }
 
 void controller_init() // also the power on event

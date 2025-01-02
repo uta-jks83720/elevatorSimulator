@@ -19,7 +19,7 @@ FCT_BGN()
             not make sense.
          */
          fct_chk(elevator_control_cmd(GO_UP | GO_DOWN) == -1);
-         fct_chk(elevator_control_cmd(GO_UP | GO_DOWN |STOP) == -1);
+         fct_chk(elevator_control_cmd(GO_UP | GO_DOWN | STOP) == -1);
          fct_chk(elevator_control_cmd(GO_UP | STOP) == -1);
          fct_chk(elevator_control_cmd(STOP | GO_DOWN) == -1);
 

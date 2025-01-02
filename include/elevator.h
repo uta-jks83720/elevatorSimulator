@@ -4,26 +4,26 @@
 // The physical elevator is simulated here.
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-// called once a second by FLTK.
-void elevator_tick();
+    // called once a second by FLTK.
+    void elevator_tick();
 
-// called when the simulated power is turned off
-void init_elevator();
+    // called when the simulated power is turned off
+    void init_elevator();
 
-// returns the time in seconds
-unsigned int timeInSeconds();
+    // returns the time in seconds
+    unsigned int timeInSeconds();
 
-void power_on();
+    void power_on();
 
-void power_off();
+    void power_off();
 
-int power_status();
+    int power_status();
 
-int cab_position();
-
+    int cab_position();
 
 #ifdef __cplusplus
 }
