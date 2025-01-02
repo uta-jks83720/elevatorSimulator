@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "elevatorController.h"
+#include "events.h"
 
 // This is an example elevator controller.  As part of the
 // assignment, students are to re-implement the elevator controller
@@ -118,7 +119,7 @@ void controller_tick()
 
 void controller_init() // also the power on event
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT();
 
 	currentState = FLOOR2;
 	// clear all timers
@@ -126,7 +127,7 @@ void controller_init() // also the power on event
 
 void off_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT();
 	int eCmd = ALL_OFF;
 	elevator_control_cmd(eCmd);
 }
@@ -134,22 +135,22 @@ void off_state_entry()
 void floor2_state_entry()
 {
 	printf("%s\n", __FUNCTION__);
-	int eCmd = ALL_OFF;
-	elevator_control_cmd(eCmd);
+	elevator_control_cmd(ALL_OFF);
+	elevator_indicators(CAB_POS_2 | POS_FLOOR_2);
 }
 
 void floor3_state_entry()
 {
 	printf("%s\n", __FUNCTION__);
-	int eCmd = ALL_OFF;
-	elevator_control_cmd(eCmd);
+	elevator_control_cmd(ALL_OFF);
+	elevator_indicators(CAB_POS_3 | POS_FLOOR_3);
 }
 
 void floor4_state_entry()
 {
 	printf("%s\n", __FUNCTION__);
-	int eCmd = ALL_OFF;
-	elevator_control_cmd(eCmd);
+ 	elevator_control_cmd(ALL_OFF);
+	elevator_indicators(CAB_POS_4 | POS_FLOOR_4);
 }
 
 void goingdnto2_state_entry()

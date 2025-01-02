@@ -11,7 +11,7 @@ decl {\#include "events.h"} {public global
 decl {\#include <string>} {public global
 }
 
-class UserInterfaceElevator {open
+class UserInterfaceElevator {open selected
 } {
   Function {make_window()} {open
   } {
@@ -223,7 +223,6 @@ if (cab_position()==32) pos32->value(1);
 if (cab_position()==34) pos34->value(1);
 if (cab_position()==36) pos36->value(1);
 if (cab_position()==38) pos38->value(1);
-if (cab_position()==40) pos40->value(1);} {selected
-    }
+if (cab_position()==40) pos40->value(1);} {}
   }
 }

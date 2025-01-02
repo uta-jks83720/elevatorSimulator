@@ -19,6 +19,15 @@ static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is nei
 static volatile int doorPosition;         //  0 is open, 5 is fully closed
 static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
 
+static volatile unsigned int elevatorIndicators;
+
+int elevator_indicators(unsigned int i)
+{
+      elevatorIndicators = i;
+      INFO_PRINT("indicators set to %x\n",i);
+      return 1;
+}
+
 int elevator_control_cmd(unsigned int c)
 {
         DEBUG_PRINT("cmd = %x\n", c);
@@ -202,4 +211,9 @@ int power_status()
 int cab_position()
 {
         return cabPosition;
+}
+
+unsigned int indicators()
+{
+        return elevatorIndicators;
 }

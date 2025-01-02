@@ -55,4 +55,4 @@ clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
 		${OBJFILES} libevsim.a \
 		elevatorController/basicTest.o \
-		basicTest controllerTest1
+		basicTest controllerTest1 basicElevatorTest

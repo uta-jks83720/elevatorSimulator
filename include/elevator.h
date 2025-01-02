@@ -25,6 +25,8 @@ extern "C"
 
     int cab_position();
 
+    unsigned int indicators();
+
 #ifdef __cplusplus
 }
 #endif
