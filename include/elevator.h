@@ -25,7 +25,10 @@ extern "C"
 
     int cab_position();
 
+    // returns the current value of indicators in the elevator
     unsigned int indicators();
+
+    int door_position();
 
 #ifdef __cplusplus
 }

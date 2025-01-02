@@ -11,13 +11,13 @@ decl {\#include "events.h"} {public global
 decl {\#include <string>} {public global
 }
 
-class UserInterfaceElevator {open selected
+class UserInterfaceElevator {open
 } {
   Function {make_window()} {open
   } {
     Fl_Window {} {
       label elevatorSimulator open
-      xywh {596 102 630 445} type Double visible
+      xywh {553 283 1185 660} type Double visible
     } {
       Fl_Pack {} {
         label {Current Floor} open
@@ -34,15 +34,6 @@ class UserInterfaceElevator {open selected
         Fl_Round_Button currentFloor2 {
           label 2
           xywh {285 70 70 20} down_box ROUND_DOWN_BOX
-        }
-      }
-      Fl_Group {} {
-        label {Door Status} open
-        xywh {415 165 135 25}
-      } {
-        Fl_Progress {} {
-          label unknown
-          xywh {420 165 130 24}
         }
       }
       Fl_Group {} {
@@ -113,80 +104,115 @@ else
       }
       Fl_Pack {} {
         label {Floor 2 Call} open
-        xywh {70 245 140 90} box BORDER_FRAME
+        xywh {440 490 140 90} box BORDER_FRAME
       } {
         Fl_Light_Button {} {
           label CALL
-          xywh {90 260 89 25}
+          xywh {460 505 89 25}
         }
         Fl_Light_Button {} {
           label UPPTAGEN
-          xywh {90 295 90 20}
+          xywh {460 540 90 20}
         }
       }
       Fl_Pack {} {
         label {Floor 3 Call} open
-        xywh {65 140 140 90} box BORDER_FRAME
+        xywh {275 495 140 80} box BORDER_FRAME
       } {
         Fl_Light_Button {} {
           label CALL
-          xywh {85 155 89 25}
+          xywh {295 500 89 25}
         }
         Fl_Light_Button {} {
           label UPPTAGEN
-          xywh {85 190 90 20}
+          xywh {295 535 90 20}
         }
       }
       Fl_Pack {} {
         label {Floor 4 Call} open
-        xywh {60 25 140 90} box BORDER_FRAME
+        xywh {120 500 140 90} box BORDER_FRAME
       } {
         Fl_Light_Button {} {
           label CALL
-          xywh {80 40 89 25}
+          xywh {140 515 89 25}
         }
         Fl_Light_Button {} {
           label UPPTAGEN
-          xywh {80 75 90 20}
+          xywh {140 550 90 20}
         }
       }
       Fl_Group {} {
-        label {Cab Controls and Indicators} open
-        xywh {345 235 215 220}
+        label {Elevator Cab} open
+        xywh {770 130 260 460} box BORDER_FRAME
       } {
-        Fl_Button {} {
-          label 4
-          callback {eventEnum event;
-event=CALL_FLOOR_4;
+        Fl_Group {} {
+          label CAB_POS_X open
+          xywh {810 155 185 25} align 4
+        } {
+          Fl_Round_Button GUI_CAB_POS_2 {
+            label 2
+            xywh {815 160 70 20} down_box ROUND_DOWN_BOX
+          }
+          Fl_Round_Button GUI_CAB_POS_3 {
+            label 3
+            xywh {870 160 70 20} down_box ROUND_DOWN_BOX
+          }
+          Fl_Round_Button GUI_CAB_POS_4 {
+            label 4
+            xywh {925 160 70 20} down_box ROUND_DOWN_BOX
+          }
+        }
+        Fl_Group {} {
+          label {CALL BUTTONS} open
+          xywh {792 235 220 25} align 4
+        } {
+          Fl_Button GUI_REQ_FLOOR_2 {
+            label 2
+            callback {eventEnum event;
+event=REQ_FLOOR_2;
 event_to_controller(event);}
-          xywh {370 260 70 20}
-        }
-        Fl_Button {} {
-          label 3
-          callback {eventEnum event;
-event=CALL_FLOOR_3;
+            xywh {792 240 70 20}
+          }
+          Fl_Button GUI_REQ_FLOOR_3 {
+            label 3
+            callback {eventEnum event;
+event=REQ_FLOOR_3;
 event_to_controller(event);}
-          xywh {370 290 70 20}
-        }
-        Fl_Button {} {
-          label 2
-          callback {eventEnum event;
-event=CALL_FLOOR_2;
+            xywh {867 240 70 20}
+          }
+          Fl_Button GUI_REQ_FLOOR_4 {
+            label 4
+            callback {eventEnum event;
+event=REQ_FLOOR_4;
 event_to_controller(event);}
-          xywh {370 320 70 20}
+            xywh {942 240 70 20}
+          }
         }
-        Fl_Button {} {
-          label Door
-          xywh {370 365 70 20}
+        Fl_Group {} {
+          label REQ_FLOOR_ACCEPTED_X open
+          xywh {790 289 225 34} align 4
+        } {
+          Fl_Output GUI_REQ_FLOOR_ACCEPTED_2 {
+            label 2
+            xywh {835 294 15 28}
+          }
+          Fl_Output GUI_REQ_FLOOR_ACCEPTED_3 {
+            label 3
+            xywh {920 295 15 28}
+          }
+          Fl_Output GUI_REQ_FLOOR_ACCEPTED_4 {
+            label 4
+            xywh {995 295 15 26}
+          }
         }
-        Fl_Text_Display REQ4 {
-          xywh {465 260 50 30}
-        }
-        Fl_Text_Display REQ3 {
-          xywh {465 290 50 30}
-        }
-        Fl_Text_Display REQ2 {
-          xywh {465 320 50 30}
+        Fl_Group {} {
+          label {Door Position} open
+          xywh {790 420 235 50} align 4
+        } {
+          Fl_Progress GUI_DOOR_POSITION {
+            label { }
+            xywh {825 431 130 24}
+          }
         }
       }
     }
@@ -196,7 +222,22 @@ event_to_controller(event);}
     code {timeBox->value(std::to_string(timeInSeconds()).c_str());} {}
     codeblock {if (power_status()) powerButton->label("ON"); else powerButton->label("OFF");} {open
     } {}
-    code {currentFloor2->value(0);
+    code {// fetch the current indicators from the elevator
+unsigned int ind = indicators(); 
+(ind & CAB_POS_2) ? GUI_CAB_POS_2->value(true):GUI_CAB_POS_2->value(false);
+(ind & CAB_POS_3) ? GUI_CAB_POS_3->value(true):GUI_CAB_POS_3->value(false);
+(ind & CAB_POS_4) ? GUI_CAB_POS_4->value(true):GUI_CAB_POS_4->value(false);
+//
+(ind & REQ_FLOOR_ACCEPTED_2) ? GUI_REQ_FLOOR_ACCEPTED_2->value("+"):GUI_REQ_FLOOR_ACCEPTED_2->value("");
+(ind & REQ_FLOOR_ACCEPTED_3) ? GUI_REQ_FLOOR_ACCEPTED_3->value("+"):GUI_REQ_FLOOR_ACCEPTED_3->value("");
+(ind & REQ_FLOOR_ACCEPTED_4) ? GUI_REQ_FLOOR_ACCEPTED_4->value("+"):GUI_REQ_FLOOR_ACCEPTED_4->value("");
+
+ //
+ GUI_DOOR_POSITION->minimum(1);
+ GUI_DOOR_POSITION->maximum(5);
+ GUI_DOOR_POSITION->value(door_position());
+ 
+currentFloor2->value(0);
 currentFloor3->value(0);
 currentFloor4->value(0);
 if (cab_position()==20) currentFloor2->value(1);
@@ -223,6 +264,7 @@ if (cab_position()==32) pos32->value(1);
 if (cab_position()==34) pos34->value(1);
 if (cab_position()==36) pos36->value(1);
 if (cab_position()==38) pos38->value(1);
-if (cab_position()==40) pos40->value(1);} {}
+if (cab_position()==40) pos40->value(1);} {selected
+    }
   }
 }

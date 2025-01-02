@@ -6,6 +6,8 @@ extern "C"
 
     typedef enum
     {
+        TIMER_EXPIRED,
+        POWER_ON,
         DOOR_IS_OPEN,
         DOOR_IS_CLOSED,
         DOOR_IS_OBSTRUCTED,
@@ -42,12 +44,12 @@ extern "C"
     */
 
 #define ALL_OFF 0x000000000
-#define GO_UP 0x00000002
-#define GO_DOWN 0x00000004
-#define STOP 0x00000008
-#define OPEN_DOOR 0x00000010
-#define CLOSE_DOOR 0x00000020
-#define STOP_DOOR 0x00000040
+#define GO_UP 0x00000001
+#define GO_DOWN 0x00000002
+#define STOP 0x00000004
+#define OPEN_DOOR 0x0000008
+#define CLOSE_DOOR 0x00000010
+#define STOP_DOOR 0x00000020
 
     int elevator_control_cmd(unsigned int);
 
@@ -79,6 +81,7 @@ extern "C"
 #define RING_BELL 0x00008000
 
     int elevator_indicators(unsigned int);
+    unsigned int indicators();
 
 #ifdef __cplusplus
 }

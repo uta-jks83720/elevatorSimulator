@@ -20,6 +20,7 @@ extern "C"
     typedef enum
     {
         OFF,
+        INIT,
         FLOOR2,
         FLOOR3,
         FLOOR4,

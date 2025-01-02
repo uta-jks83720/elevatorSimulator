@@ -21,7 +21,9 @@ FCT_BGN()
 
             these tests will break if the table changes....not ideal, but the way it is.
          */
-         /* these are valid transitions */
+         /* these are valid transitions */ 
+         fct_chk(transition(OFF, POWER_ON) == INIT);
+
          fct_chk(transition(GOINGDNTO2, CAB_POSITION_FLOOR_2) == FLOOR2);
          fct_chk(transition(GOINGDNTO3, CAB_POSITION_FLOOR_3) == FLOOR3);
          fct_chk(transition(GOINGUPTO3, CAB_POSITION_FLOOR_3) == FLOOR3);

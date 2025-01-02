@@ -23,9 +23,9 @@ static volatile unsigned int elevatorIndicators;
 
 int elevator_indicators(unsigned int i)
 {
-      elevatorIndicators = i;
-      INFO_PRINT("indicators set to %x\n",i);
-      return 1;
+        elevatorIndicators = i;
+        INFO_PRINT("indicators set to %x\n", i);
+        return 1;
 }
 
 int elevator_control_cmd(unsigned int c)
@@ -63,17 +63,18 @@ int elevator_control_cmd(unsigned int c)
         }
         if (c & OPEN_DOOR)
         {
-                doorDirection = 1;
+                doorDirection = -1;
         }
         if (c & CLOSE_DOOR)
         {
-                doorDirection = -1;
+                doorDirection = 1;
         }
         return 0;
 }
 
 void init_elevator()
 {
+        DEBUG_PRINT("\n");
         // this function is called to initialize the simulated elevator
         elapsedTime = 0;
         power = 0;
@@ -85,10 +86,11 @@ void init_elevator()
 
 void elevator_tick()
 {
-        DEBUG_PRINT("elevator tick called\n");
+        // DEBUG_PRINT("elevator tick called\n");
         if (power)
         {
                 DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
+                DEBUG_PRINT("door direction %d door position %d\n",doorDirection,doorPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;
@@ -189,17 +191,21 @@ unsigned int timeInSeconds()
 
 void power_on()
 {
+        DEBUG_PRINT("\n");
         if (!power)
         {
                 init_elevator();
                 controller_init();
-                // event_to_controller(POWER_ON);
+
                 power = 1;
+                elevatorIndicators = ALL_OFF;
+                event_to_controller(POWER_ON);
         }
 }
 
 void power_off()
 {
+        DEBUG_PRINT("\n");
         power = 0;
 }
 
@@ -215,5 +221,11 @@ int cab_position()
 
 unsigned int indicators()
 {
+
         return elevatorIndicators;
+}
+
+int door_position()
+{
+        return doorPosition;
 }
