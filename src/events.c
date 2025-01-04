@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <string.h>
 
 #include "events.h"
 
@@ -26,6 +27,7 @@ const char *eventEnumName(eventEnum e)
         "REQ_BELL_PRESSED",
         "REQ_BELL_RELEASED"};
 
-    assert(e >= POWER_ON && e <= REQ_BELL_RELEASED);
+    assert(e >= TIMER_EXPIRED && e <= REQ_BELL_RELEASED);
+    assert(!strcmp(n[REQ_BELL_RELEASED], "REQ_BELL_RELEASED"));
     return n[e];
 }
