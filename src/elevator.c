@@ -19,6 +19,9 @@ static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is nei
 static volatile int doorPosition;         //  0 is open, 5 is fully closed
 static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
 
+static volatile int lastDoorPosition;
+static volatile int lastCabPosition;
+
 static volatile unsigned int elevatorIndicators;
 
 int elevator_indicators(unsigned int i)
@@ -90,7 +93,7 @@ void elevator_tick()
         if (power)
         {
                 DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
-                DEBUG_PRINT("door direction %d door position %d\n",doorDirection,doorPosition);
+                DEBUG_PRINT("door direction %d door position %d\n", doorDirection, doorPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;
@@ -146,11 +149,11 @@ void elevator_tick()
                 /////////////////////////////////////////////////////////
                 if (doorDirection)
                 {
-                        if (doorPosition == 1)
+                        if ((doorPosition == 1) && (doorPosition != lastDoorPosition))
                         {
                                 event_to_controller(DOOR_IS_OPEN);
                         }
-                        else if (doorPosition == 5)
+                        else if ((doorPosition == 5) && (doorPosition != lastDoorPosition))
                         {
                                 event_to_controller(DOOR_IS_CLOSED);
                         }
@@ -159,27 +162,32 @@ void elevator_tick()
 
                 if (cabDirection)
                 {
-                        if (cabPosition == 20)
+                        if (lastCabPosition != cabPosition)
                         {
-                                event_to_controller(CAB_POSITION_FLOOR_2);
-                        }
-                        else if (cabPosition == 25)
-                        {
-                                event_to_controller(CAB_POSITION_FLOOR_2_5);
-                        }
-                        else if (cabPosition == 30)
-                        {
-                                event_to_controller(CAB_POSITION_FLOOR_3);
-                        }
-                        else if (cabPosition == 35)
-                        {
-                                event_to_controller(CAB_POSITION_FLOOR_3_5);
-                        }
-                        else if (cabPosition == 40)
-                        {
-                                event_to_controller(CAB_POSITION_FLOOR_4);
+                                if (cabPosition == 20)
+                                {
+                                        event_to_controller(CAB_POSITION_FLOOR_2);
+                                }
+                                else if (cabPosition == 25)
+                                {
+                                        event_to_controller(CAB_POSITION_FLOOR_2_5);
+                                }
+                                else if (cabPosition == 30)
+                                {
+                                        event_to_controller(CAB_POSITION_FLOOR_3);
+                                }
+                                else if (cabPosition == 35)
+                                {
+                                        event_to_controller(CAB_POSITION_FLOOR_3_5);
+                                }
+                                else if (cabPosition == 40)
+                                {
+                                        event_to_controller(CAB_POSITION_FLOOR_4);
+                                }
                         }
                 } // cab is moving
+                lastCabPosition = cabPosition;
+                lastDoorPosition = doorPosition;
 
         } // power is on
 }

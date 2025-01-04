@@ -39,6 +39,7 @@ void goingupto4_state_entry();
 
 // array of function pointers, indexed by elevatorStateEnum
 void (*on_entry[GOINGDNTO2 + 1])() = {off_entry, init_entry, floor2_state_entry, floor3_state_entry, floor4_state_entry, goingdnto2_state_entry, goingdnto3_state_entry, goingupto3_state_entry, goingupto4_state_entry};
+void (*on_exit[GOINGDNTO2 + 1])() = {NULL};
 
 typedef struct
 {
@@ -89,20 +90,28 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 	// run the "on entry" for the new state
 	if (fsm[state][event].active)
 	{
+		INFO_PRINT("current state = %s\n", elevatorStateEnumNames(state));
+
+		// run the exit actions
+		if (on_exit[state])
+		{
+			assert(on_entry[state]);
+			(on_exit[state])();
+		}
+
 		// determine next state.
 		nextState = fsm[state][event].nextState;
-
 		assert(nextState >= OFF && nextState <= GOINGDNTO2);
 
+		INFO_PRINT("new state = %s\n", elevatorStateEnumNames(nextState));
+
+		// run the entry actions
 		if (on_entry[nextState])
 		{
 			assert(on_entry[nextState]);
 			(on_entry[nextState])();
 		}
 	}
-
-	INFO_PRINT("current state = %s\n", elevatorStateEnumNames(state));
-	INFO_PRINT("new state = %s\n", elevatorStateEnumNames(nextState));
 
 	return nextState;
 }
