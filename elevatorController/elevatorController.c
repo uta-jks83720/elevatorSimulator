@@ -38,7 +38,16 @@ void goingupto3_state_entry();
 void goingupto4_state_entry();
 
 // array of function pointers, indexed by elevatorStateEnum
-void (*on_entry[GOINGDNTO2 + 1])() = {off_entry, init_entry, floor2_state_entry, floor3_state_entry, floor4_state_entry, goingdnto2_state_entry, goingdnto3_state_entry, goingupto3_state_entry, goingupto4_state_entry};
+void (*on_entry[GOINGDNTO2 + 1])() = {off_entry,
+									  init_entry,
+									  floor2_state_entry,
+									  floor3_state_entry,
+									  floor4_state_entry,
+									  goingupto3_state_entry,
+									  goingdnto3_state_entry,
+									  goingupto4_state_entry,
+									  goingdnto2_state_entry};
+
 void (*on_exit[GOINGDNTO2 + 1])() = {NULL};
 
 typedef struct
@@ -63,12 +72,12 @@ typedef struct
 #define ____________
 #define _____________
 #define ______________
-
+// if f, then the state is not used for anything......
 //                    STATE           EVENT
 const stateInfo_t fsm[GOINGDNTO2 + 1][REQ_BELL_RELEASED + 1] = {
 	/*              TIMER_EXPIRED     POWER ON         DOOR_IS_OPEN     DOOR_IS_CLOSED   DOOR_IS_OBSTRUCTED  CAB_POSITION_FLOOR_2   CAB_POSITION_FLOOR_2_5   CAB_POSITION_FLOOR_3   CAB_POSITION_FLOOR_3_5  CAB_POSITION_FLOOR_4   CALL_FLOOR_2      CALL_FLOOR_3     CALL_FLOOR_4      REQ_DOOR_OPEN      REQ_STOP        REQ_FLOOR_2      REQ_FLOOR_3          REQ_FLOOR_4        REQ_BELL_PRESSED   REQ_BELL_RELEASED*/
 	/*OFF       */ {{f, INIT}, ________{t, INIT}, ______{f, OFF}, _______{f, OFF}, _______{f, OFF}, __________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ______________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ________{f, OFF}, _______{f, OFF}, ________{f, OFF}, ________{f, OFF}, _______{f, OFF}, _______{f, OFF}, ___________{f, OFF}, ________{f, OFF}, __________{f, OFF}},
-	/*INIT      */ {{f, INIT}, ________{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
+	/*INIT      */ {{t, FLOOR2}, ______{f, INIT}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
 	/*FLOOR2    */ {{f, INIT}, ________{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
 	/*FLOOR3    */ {{f, INIT}, ________{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, _______{f, FLOOR3}, __________{f, FLOOR3}, ___________{f, FLOOR3}, ___________{f, FLOOR3}, __________{f, FLOOR3}, ___________{t, GOINGDNTO2}, _{f, FLOOR3}, ____{t, GOINGUPTO4}, _{f, FLOOR3}, _____{f, FLOOR3}, ____{t, GOINGDNTO2}, {f, FLOOR3}, ________{t, GOINGUPTO4}, _{f, FLOOR3}, _______{f, FLOOR3}},
 	/*FLOOR4    */ {{f, INIT}, ________{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, _______{f, FLOOR4}, __________{f, FLOOR4}, ___________{f, FLOOR4}, ___________{f, FLOOR4}, __________{f, FLOOR4}, ___________{t, GOINGDNTO2}, _{t, GOINGDNTO3}, {f, FLOOR4}, _____{f, FLOOR4}, _____{f, FLOOR4}, ____{t, GOINGDNTO2}, {t, GOINGDNTO3}, ____{f, FLOOR4}, _____{f, FLOOR4}, _______{f, FLOOR4}},
@@ -150,6 +159,8 @@ void controller_init()
 void init_entry()
 {
 	DEBUG_PRINT("\n");
+	// as part of the requirements, the door needs to be opened
+	// and all indicators turned on.
 	elevator_control_cmd(OPEN_DOOR);
 	elevator_indicators(-1);
 	timer = 20;
@@ -178,37 +189,37 @@ void floor3_state_entry()
 
 void floor4_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT("\n");
 	elevator_control_cmd(ALL_OFF);
 	elevator_indicators(CAB_POS_4 | POS_FLOOR_4);
 }
 
 void goingdnto2_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_DOWN);
 	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_2 | CALL_ACCEPTED_FLOOR_2);
 }
 
 void goingdnto3_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_DOWN);
 	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3);
 }
 
 void goingupto3_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_UP);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_4);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3);
 }
 
 void goingupto4_state_entry()
 {
-	printf("%s\n", __FUNCTION__);
+	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_UP);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_4);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_4 | CALL_ACCEPTED_FLOOR_4);
 }
 
 const char *elevatorStateEnumNames(elevatorStateEnum e)

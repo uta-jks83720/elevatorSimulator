@@ -92,8 +92,8 @@ void elevator_tick()
         // DEBUG_PRINT("elevator tick called\n");
         if (power)
         {
-                DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
-                DEBUG_PRINT("door direction %d door position %d\n", doorDirection, doorPosition);
+                //DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
+                //DEBUG_PRINT("door direction %d door position %d\n", doorDirection, doorPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;
