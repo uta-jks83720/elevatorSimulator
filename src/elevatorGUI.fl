@@ -17,7 +17,7 @@ class UserInterfaceElevator {open
   } {
     Fl_Window {} {
       label elevatorSimulator open
-      xywh {553 283 1185 660} type Double visible
+      xywh {852 84 1070 375} type Double visible
     } {
       Fl_Pack {} {
         label {Current Floor} open
@@ -102,45 +102,6 @@ else
           xywh {280 325 45 20} down_box ROUND_DOWN_BOX
         }
       }
-      Fl_Pack {} {
-        label {Floor 2 Call} open
-        xywh {440 490 140 90} box BORDER_FRAME
-      } {
-        Fl_Light_Button {} {
-          label CALL
-          xywh {460 505 89 25}
-        }
-        Fl_Light_Button {} {
-          label UPPTAGEN
-          xywh {460 540 90 20}
-        }
-      }
-      Fl_Pack {} {
-        label {Floor 3 Call} open
-        xywh {275 495 140 80} box BORDER_FRAME
-      } {
-        Fl_Light_Button {} {
-          label CALL
-          xywh {295 500 89 25}
-        }
-        Fl_Light_Button {} {
-          label UPPTAGEN
-          xywh {295 535 90 20}
-        }
-      }
-      Fl_Pack {} {
-        label {Floor 4 Call} open
-        xywh {120 500 140 90} box BORDER_FRAME
-      } {
-        Fl_Light_Button {} {
-          label CALL
-          xywh {140 515 89 25}
-        }
-        Fl_Light_Button {} {
-          label UPPTAGEN
-          xywh {140 550 90 20}
-        }
-      }
       Fl_Group {} {
         label {Elevator Cab} open
         xywh {770 130 260 460} box BORDER_FRAME
@@ -164,55 +125,94 @@ else
         }
         Fl_Group {} {
           label {CALL BUTTONS} open
-          xywh {792 235 220 25} align 4
+          xywh {800 195 225 25} align 4
         } {
           Fl_Button GUI_REQ_FLOOR_2 {
             label 2
             callback {eventEnum event;
 event=REQ_FLOOR_2;
 event_to_controller(event);}
-            xywh {792 240 70 20}
+            xywh {800 197 70 20}
           }
           Fl_Button GUI_REQ_FLOOR_3 {
             label 3
             callback {eventEnum event;
 event=REQ_FLOOR_3;
 event_to_controller(event);}
-            xywh {867 240 70 20}
+            xywh {875 197 70 20}
           }
           Fl_Button GUI_REQ_FLOOR_4 {
             label 4
             callback {eventEnum event;
 event=REQ_FLOOR_4;
 event_to_controller(event);}
-            xywh {942 240 70 20}
+            xywh {955 197 70 20}
           }
         }
         Fl_Group {} {
           label REQ_FLOOR_ACCEPTED_X open
-          xywh {790 289 225 34} align 4
+          xywh {805 236 225 34} align 4
         } {
           Fl_Output GUI_REQ_FLOOR_ACCEPTED_2 {
             label 2
-            xywh {835 294 15 28}
+            xywh {850 241 15 28}
           }
           Fl_Output GUI_REQ_FLOOR_ACCEPTED_3 {
             label 3
-            xywh {920 295 15 28}
+            xywh {935 242 15 28}
           }
           Fl_Output GUI_REQ_FLOOR_ACCEPTED_4 {
             label 4
-            xywh {995 295 15 26}
+            xywh {1010 242 15 26}
           }
         }
         Fl_Group {} {
           label {Door Position} open
-          xywh {790 420 235 50} align 4
+          xywh {795 280 235 50} align 4
         } {
           Fl_Progress GUI_DOOR_POSITION {
             label { }
-            xywh {825 431 130 24}
+            xywh {830 291 130 24}
           }
+        }
+      }
+      Fl_Group {} {
+        label {FLOOR 2} open
+        xywh {55 30 115 45}
+      } {
+        Fl_Light_Button GUI_UPPTAGEN_FLOOR_2 {
+          label CALL
+          callback {eventEnum event;
+event=REQ_FLOOR_2;
+event_to_controller(event);}
+          xywh {60 35 74 20}
+        }
+      }
+      Fl_Group {} {
+        label {FLOOR 3} open
+        xywh {55 105 115 45}
+      } {
+        Fl_Light_Button GUI_UPPTAGEN_FLOOR_3 {
+          label CALL
+          callback {eventEnum event;
+event=REQ_FLOOR_3;
+event_to_controller(event);}
+          xywh {60 110 74 20}
+        }
+      }
+      Fl_Group {} {
+        label {FLOOR 4}
+        callback {eventEnum event;
+event=REQ_FLOOR_4;
+event_to_controller(event);} open
+        xywh {55 175 115 45}
+      } {
+        Fl_Light_Button GUI_UPPTAGEN_FLOOR_4 {
+          label CALL
+          callback {eventEnum event;
+event=REQ_FLOOR_4;
+event_to_controller(event);}
+          xywh {60 180 74 20}
         }
       }
     }
@@ -231,6 +231,10 @@ unsigned int ind = indicators();
 (ind & REQ_FLOOR_ACCEPTED_2) ? GUI_REQ_FLOOR_ACCEPTED_2->value("+"):GUI_REQ_FLOOR_ACCEPTED_2->value("");
 (ind & REQ_FLOOR_ACCEPTED_3) ? GUI_REQ_FLOOR_ACCEPTED_3->value("+"):GUI_REQ_FLOOR_ACCEPTED_3->value("");
 (ind & REQ_FLOOR_ACCEPTED_4) ? GUI_REQ_FLOOR_ACCEPTED_4->value("+"):GUI_REQ_FLOOR_ACCEPTED_4->value("");
+//
+(ind & UPPTAGEN_FLOOR_2) ? GUI_UPPTAGEN_FLOOR_2->selection_color(FL_YELLOW):GUI_UPPTAGEN_FLOOR_2->selection_color(FL_GRAY);
+(ind & UPPTAGEN_FLOOR_3) ? GUI_UPPTAGEN_FLOOR_3->selection_color(FL_YELLOW):GUI_UPPTAGEN_FLOOR_3->selection_color(FL_GRAY);
+(ind & UPPTAGEN_FLOOR_4) ? GUI_UPPTAGEN_FLOOR_4->selection_color(FL_YELLOW):GUI_UPPTAGEN_FLOOR_4->selection_color(FL_GRAY);
 
  //
  GUI_DOOR_POSITION->minimum(1);

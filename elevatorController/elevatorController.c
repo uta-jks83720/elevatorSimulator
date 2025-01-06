@@ -38,6 +38,7 @@ void goingupto3_state_entry();
 void goingupto4_state_entry();
 
 // array of function pointers, indexed by elevatorStateEnum
+// must be in the same order as the enums are declared
 void (*on_entry[GOINGDNTO2 + 1])() = {off_entry,
 									  init_entry,
 									  floor2_state_entry,
