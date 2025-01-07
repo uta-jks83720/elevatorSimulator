@@ -58,6 +58,7 @@ else
         }
         Fl_Check_Button {} {
           label {obstruct door}
+          callback {door_obstructed(o->value());}
           xywh {440 110 70 20} down_box DOWN_BOX
         }
       }
@@ -104,7 +105,7 @@ else
       }
       Fl_Group {} {
         label {Elevator Cab} open
-        xywh {770 130 260 460} box BORDER_FRAME
+        xywh {770 130 275 460} box BORDER_FRAME
       } {
         Fl_Group {} {
           label CAB_POS_X open
@@ -174,6 +175,14 @@ event_to_controller(event);}
             label { }
             xywh {830 291 130 24}
           }
+        }
+        Fl_Button {} {
+          label DOOR
+          xywh {975 295 70 20}
+        }
+        Fl_Light_Button {} {
+          label BELL selected
+          xywh {835 335 74 20}
         }
       }
       Fl_Group {} {
@@ -281,7 +290,6 @@ if (cab_position()==36) pos36->value(1);
 if (cab_position()==38) pos38->value(1);
 if (cab_position()==40) pos40->value(1);
 //
-timeBox->value(std::to_string(timeInSeconds()).c_str());} {selected
-    }
+timeBox->value(std::to_string(timeInSeconds()).c_str());} {}
   }
 }

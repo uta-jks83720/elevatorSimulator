@@ -22,7 +22,15 @@ static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is 
 static volatile int lastDoorPosition;
 static volatile int lastCabPosition;
 
+static volatile int obstructed;
+
 static volatile unsigned int elevatorIndicators;
+
+void door_obstructed(int x)
+{
+        DEBUG_PRINT("setting obstructed door to %X\n", x);
+        obstructed = x;
+}
 
 int elevator_indicators(unsigned int i)
 {
@@ -141,7 +149,11 @@ void elevator_tick()
                 }
                 else if (doorDirection == -1)
                 {
-                        if (doorPosition > 1)
+                        if ((doorPosition == 4) && (cabDirection = -1) && obstructed)
+                        {
+                                // stop moving the door
+                        }
+                        else if (doorPosition > 1)
                         {
                                 doorPosition--;
                         }
@@ -163,9 +175,14 @@ void elevator_tick()
                                 event_to_controller(DOOR_IS_CLOSED);
                         }
                 }
-                // figure this out.... DOOR_IS_OBSTRUCTED();
-
-                if (cabDirection)
+                // DOOR_IS_OBSTRUCTED();
+                // An obstructed door is found when the door is obstructed when it is closing,
+                // at position 4
+                if ((doorPosition == 4) && (cabDirection = -1) && obstructed)
+                {
+                        event_to_controller(DOOR_IS_OBSTRUCTED);
+                }
+                else if (cabDirection)
                 {
                         if (lastCabPosition != cabPosition)
                         {

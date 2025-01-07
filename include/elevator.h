@@ -30,6 +30,8 @@ extern "C"
 
     int door_position();
 
+    void door_obstructed(int);
+
 #ifdef __cplusplus
 }
 #endif

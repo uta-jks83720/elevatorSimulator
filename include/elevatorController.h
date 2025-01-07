@@ -7,7 +7,7 @@
 #pragma once
 
 #include <stdbool.h>
- 
+
 #include "events.h"
 
 #ifdef __cplusplus
@@ -15,7 +15,7 @@ extern "C"
 {
 #endif
 
-// States of the elevator system
+    // States of the elevator system
 
     typedef enum
     {
@@ -34,7 +34,6 @@ extern "C"
     void controller_init();
 
     const char *elevatorStateEnumNames(elevatorStateEnum e);
-     
 
     // visibility to support testing
     elevatorStateEnum transition(elevatorStateEnum state, eventEnum event);

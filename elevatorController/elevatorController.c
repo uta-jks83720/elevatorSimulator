@@ -151,7 +151,6 @@ void controller_tick()
 void controller_init()
 {
 	DEBUG_PRINT("\n");
-
 	currentState = OFF;
 	// clear all timers
 	timer = 0;
@@ -226,7 +225,6 @@ void goingupto4_state_entry()
 const char *elevatorStateEnumNames(elevatorStateEnum e)
 {
 	assert(e >= OFF && e <= GOINGDNTO2);
-
 	const char *n[] = {"OFF",
 					   "INIT",
 					   "FLOOR2",
