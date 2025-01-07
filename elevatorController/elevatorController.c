@@ -199,28 +199,28 @@ void goingdnto2_state_entry()
 {
 	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_DOWN);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_2 | CALL_ACCEPTED_FLOOR_2);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_2 | CALL_ACCEPTED_FLOOR_2 | UPPTAGEN_FLOOR_3 | UPPTAGEN_FLOOR_4);
 }
 
 void goingdnto3_state_entry()
 {
 	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_DOWN);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3 | UPPTAGEN_FLOOR_4 | UPPTAGEN_FLOOR_2);
 }
 
 void goingupto3_state_entry()
 {
 	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_UP);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_3 | CALL_ACCEPTED_FLOOR_3 | UPPTAGEN_FLOOR_2 | UPPTAGEN_FLOOR_4);
 }
 
 void goingupto4_state_entry()
 {
 	DEBUG_PRINT("\n");
 	elevator_control_cmd(GO_UP);
-	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_4 | CALL_ACCEPTED_FLOOR_4);
+	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_4 | CALL_ACCEPTED_FLOOR_4 | UPPTAGEN_FLOOR_2 | UPPTAGEN_FLOOR_3);
 }
 
 const char *elevatorStateEnumNames(elevatorStateEnum e)

@@ -36,6 +36,11 @@ int elevator_control_cmd(unsigned int c)
         DEBUG_PRINT("cmd = %x\n", c);
         // controls to the elevator are recieved here
 
+        // Check for safety issues
+        assert(!((c & GO_UP) & (c & GO_DOWN)));
+        assert(!((c & GO_UP) & (c & STOP)));
+        assert(!((c & GO_DOWN) & (c & STOP)));
+
         //    cabDirection
         if (__builtin_popcount(c & (GO_UP | GO_DOWN | STOP)) > 1)
         {
@@ -92,8 +97,8 @@ void elevator_tick()
         // DEBUG_PRINT("elevator tick called\n");
         if (power)
         {
-                //DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
-                //DEBUG_PRINT("door direction %d door position %d\n", doorDirection, doorPosition);
+                // DEBUG_PRINT("cab direction %d cabPosition %d\n", cabDirection, cabPosition);
+                // DEBUG_PRINT("door direction %d door position %d\n", doorDirection, doorPosition);
                 //////////////////////////////////////////////
                 // move the time forward
                 elapsedTime++;
