@@ -1,4 +1,4 @@
-# this makefile is ran from the root of the project
+# this makefile is ran from the root directory of the project
 
 CC=gcc
 CXX=g++
@@ -7,10 +7,13 @@ COPTS=-Wall -O0 -g -std=c11
 CPPFLAGS=-I./ -I/usr/include -I./include
 CFLAGS=-Wall -O0 -g -std=c11 -DDEBUG
 AR=ar
- 
+
+#two exectuables are created, eSim and basicTest
+#  eSim is the elevator simulator
+#  basicTest is an offline test program
 all: basicTest eSim
 
-# create the GUI
+# create the eSim program
 src/elevatorGUI.cxx: src/elevatorGUI.fl
 	fluid -o src/elevatorGUI.cxx -h src/elevatorGUI.h -c src/elevatorGUI.fl
 
@@ -36,11 +39,6 @@ basicTest: elevatorController/basicTest.c libevsim.a
 		elevatorController/basicTest.c \
 		-o basicTest ${COPTS} -L./ -levsim
 
-#controllerTest1: elevatorController/controllerTest1.c libevsim.a
-#	${CC} ${CPPFLAGS} \
-#		elevatorController/controllerTest1.c \
-#		-o controllerTest1 ${COPTS} -L./ -levsim
-
 basicElevatorTest: src/basicElevatorTest.c libevsim.a
 	${CC} ${CPPFLAGS} \
 		src/basicElevatorTest.c \
@@ -49,7 +47,6 @@ basicElevatorTest: src/basicElevatorTest.c libevsim.a
 test: basicTest basicElevatorTest #controllerTest1
 	./basicTest
 	./basicElevatorTest
-#	./controllerTest1
 
 clean:
 	-rm -f src/elevatorGUI.cxx src/elevatorGUI.h eSim \
