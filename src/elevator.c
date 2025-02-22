@@ -1,3 +1,5 @@
+// ctrl shift I formats code in vscode.....
+
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -50,6 +52,7 @@ int elevator_control_cmd(unsigned int c)
         assert(!((c & GO_DOWN) & (c & STOP)));
 
         //    cabDirection
+        // (any excuse to use popcount intrinsic)
         if (__builtin_popcount(c & (GO_UP | GO_DOWN | STOP)) > 1)
         {
                 ERROR_PRINT("invalid command %x\n", c);
@@ -178,7 +181,7 @@ void elevator_tick()
                 // DOOR_IS_OBSTRUCTED();
                 // An obstructed door is found when the door is obstructed when it is closing,
                 // at position 4
-                if ((doorPosition == 4) && (cabDirection = -1) && obstructed)
+                if ((doorPosition == 4) && (doorDirection = -1) && obstructed)
                 {
                         event_to_controller(DOOR_IS_OBSTRUCTED);
                 }
@@ -222,6 +225,7 @@ unsigned int timeInSeconds()
 void power_on()
 {
         DEBUG_PRINT("\n");
+
         if (!power)
         {
                 init_elevator();
@@ -251,7 +255,6 @@ int cab_position()
 
 unsigned int indicators()
 {
-
         return elevatorIndicators;
 }
 

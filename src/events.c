@@ -3,6 +3,10 @@
 
 #include "events.h"
 
+// This function converts an enumeration representing an
+// event into a char*.  It is intended for printing out
+// events for debugging in a human readable manner.
+
 const char *eventEnumName(eventEnum e)
 {
     const char *n[] = {
@@ -27,7 +31,14 @@ const char *eventEnumName(eventEnum e)
         "REQ_BELL_PRESSED",
         "REQ_BELL_RELEASED"};
 
+    // This code is fragile.  New events may not be reflected
+    // in this function, so the below asserts are an attempt
+    // to identify if there is a problem.
     assert(e >= TIMER_EXPIRED && e <= REQ_BELL_RELEASED);
     assert(!strcmp(n[REQ_BELL_RELEASED], "REQ_BELL_RELEASED"));
-    return n[e];
+    if (e<(REQ_BELL_RELEASED+1))
+            {
+            return n[e];
+            }
+    return "error";
 }

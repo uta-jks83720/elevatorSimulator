@@ -78,7 +78,7 @@ typedef struct
 const stateInfo_t fsm[GOINGDNTO2 + 1][REQ_BELL_RELEASED + 1] = {
 	/*              TIMER_EXPIRED     POWER ON         DOOR_IS_OPEN     DOOR_IS_CLOSED   DOOR_IS_OBSTRUCTED  CAB_POSITION_FLOOR_2   CAB_POSITION_FLOOR_2_5   CAB_POSITION_FLOOR_3   CAB_POSITION_FLOOR_3_5  CAB_POSITION_FLOOR_4   CALL_FLOOR_2      CALL_FLOOR_3     CALL_FLOOR_4      REQ_DOOR_OPEN      REQ_STOP        REQ_FLOOR_2      REQ_FLOOR_3          REQ_FLOOR_4        REQ_BELL_PRESSED   REQ_BELL_RELEASED*/
 	/*OFF       */ {{f, INIT}, ________{t, INIT}, ______{f, OFF}, _______{f, OFF}, _______{f, OFF}, __________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ______________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ________{f, OFF}, _______{f, OFF}, ________{f, OFF}, ________{f, OFF}, _______{f, OFF}, _______{f, OFF}, ___________{f, OFF}, ________{f, OFF}, __________{f, OFF}},
-	/*INIT      */ {{t, FLOOR2}, ______{f, INIT}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
+	/*INIT      */ {{t, FLOOR2}, ______{f, INIT}, ______{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
 	/*FLOOR2    */ {{f, INIT}, ________{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
 	/*FLOOR3    */ {{f, INIT}, ________{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, _______{f, FLOOR3}, __________{f, FLOOR3}, ___________{f, FLOOR3}, ___________{f, FLOOR3}, __________{f, FLOOR3}, ___________{t, GOINGDNTO2}, _{f, FLOOR3}, ____{t, GOINGUPTO4}, _{f, FLOOR3}, _____{f, FLOOR3}, ____{t, GOINGDNTO2}, {f, FLOOR3}, ________{t, GOINGUPTO4}, _{f, FLOOR3}, _______{f, FLOOR3}},
 	/*FLOOR4    */ {{f, INIT}, ________{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, _______{f, FLOOR4}, __________{f, FLOOR4}, ___________{f, FLOOR4}, ___________{f, FLOOR4}, __________{f, FLOOR4}, ___________{t, GOINGDNTO2}, _{t, GOINGDNTO3}, {f, FLOOR4}, _____{f, FLOOR4}, _____{f, FLOOR4}, ____{t, GOINGDNTO2}, {t, GOINGDNTO3}, ____{f, FLOOR4}, _____{f, FLOOR4}, _______{f, FLOOR4}},
@@ -156,6 +156,8 @@ void controller_init()
 	timer = 0;
 }
 
+// The functions below are unique to the specific state diagram
+
 void init_entry()
 {
 	DEBUG_PRINT("\n");
@@ -222,6 +224,7 @@ void goingupto4_state_entry()
 	elevator_indicators(indicators() | REQ_FLOOR_ACCEPTED_4 | CALL_ACCEPTED_FLOOR_4 | UPPTAGEN_FLOOR_2 | UPPTAGEN_FLOOR_3);
 }
 
+// This function is important for debugging and is unique for the state diagram
 const char *elevatorStateEnumNames(elevatorStateEnum e)
 {
 	assert(e >= OFF && e <= GOINGDNTO2);
