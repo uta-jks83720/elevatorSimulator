@@ -36,11 +36,11 @@ For the Elevator simulator.
 
 | REQ ID | Text                                                     |Implemented           | Tested |
 |:-------| :---                                                     |:---                  |:---    |
-| 001    | The elevator door shall open                             |  elevator.c          |        |
-|        | when commanded with OPEN_DOOR                            |  elevator.c          |        |
-| 003    | The elevator door shall close                            |                      |        |
-|        | when command with CLOSE_DOOR                             |                      |        |
-| 002    | The elevator door will open or                           |                      |        |
+| 001    | The elevator door shall open when a DOOR_OPEN command is |  elevator.c          |        |
+|        | received.                                                |  elevator.c          |        |
+| 003    | The elevator door shall close when a DOOR_CLOSE command  |                      |        |
+|        | is received.                                             |                      |        |
+| 002    | The elevator door will open or close in 5 seconds        |                      |        |
 |        | close in 5 seconds.                                      |                      |        |
 | 004    | The elevator shall STOP when an elevator command of stop |
 |        | is recieved. |
