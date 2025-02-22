@@ -30,13 +30,26 @@ to execute the program
 ```
 
 Requirements:
-For the Elevator simulator (elevator.c)
+(Note, these requirements do not cover the Elevator Controller)
 
-| REQ ID | Text                           |Implemented |
-| -------| -------------------------------| -----------|
-| 001    | The elevator door shall open   |  elevator.c|
-|        | when commanded with OPEN_DOOR  |  elevator.c|
-| 003    | The elevator door shall close  |
-|        | when command with CLOSE_DOOR   |
-| 002    | The elevator door will open or |
-|        | close in 5 seconds.            |
+For the Elevator simulator.
+
+| REQ ID | Text                                                     |Implemented           | Tested |
+|:-------| :---                                                     |:---                  |:---    |
+| 001    | The elevator door shall open                             |  elevator.c          |        |
+|        | when commanded with OPEN_DOOR                            |  elevator.c          |        |
+| 003    | The elevator door shall close                            |                      |        |
+|        | when command with CLOSE_DOOR                             |                      |        |
+| 002    | The elevator door will open or                           |                      |        |
+|        | close in 5 seconds.                                      |                      |        |
+| 004    | The elevator shall STOP when an elevator command of stop |
+|        | is recieved. |
+| 005    | The elevator shall descend when an elevator command of |
+         | GO_DOWN is recieved.                                   |
+| 006    |
+| 007    |
+| 008    |
+| 009    |
+| 010    |
+| 011    |
+| 012    |
