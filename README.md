@@ -29,4 +29,14 @@ to execute the program
 ./eSim
 ```
 
+Requirements:
+For the Elevator simulator (elevator.c)
 
+| REQ ID | Text                           |Implemented |
+| -------| -------------------------------| -----------|
+| 001    | The elevator door shall open   |  elevator.c|
+|        | when commanded with OPEN_DOOR  |  elevator.c|
+| 003    | The elevator door shall close  |
+|        | when command with CLOSE_DOOR   |
+| 002    | The elevator door will open or |
+|        | close in 5 seconds.            |
