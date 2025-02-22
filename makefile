@@ -10,8 +10,9 @@ AR=ar
 
 #two exectuables are created, eSim and basicTest
 #  eSim is the elevator simulator
-#  basicTest is an offline test program
-all: basicTest eSim
+#  basicTest is an offline test program that tests the controller
+#  basicElevatorTest is an offline test program that tests the elevator controller
+all: basicTest eSim basicElevatorTest
 
 # create the eSim program
 src/elevatorGUI.cxx: src/elevatorGUI.fl
@@ -44,7 +45,7 @@ basicElevatorTest: src/basicElevatorTest.c libevsim.a
 		src/basicElevatorTest.c \
 		-o basicElevatorTest ${COPTS} -L./ -levsim
 
-test: basicTest basicElevatorTest #controllerTest1
+test: basicTest basicElevatorTest 
 	./basicTest
 	./basicElevatorTest
 

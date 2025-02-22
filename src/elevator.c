@@ -36,8 +36,8 @@ void door_obstructed(int x)
 
 int elevator_indicators(unsigned int i)
 {
-        elevatorIndicators = i;
         INFO_PRINT("indicators set to %x\n", i);
+        elevatorIndicators = i;
         return 1;
 }
 
@@ -145,7 +145,7 @@ void elevator_tick()
                 }
                 else if (doorDirection == 1)
                 {
-                        if (doorDirection < 5)
+                        if (doorPosition < 5)
                         {
                                 doorPosition++;
                         }
@@ -156,7 +156,7 @@ void elevator_tick()
                         {
                                 // stop moving the door
                         }
-                        else if (doorPosition > 1)
+                        else if (doorPosition)
                         {
                                 doorPosition--;
                         }
