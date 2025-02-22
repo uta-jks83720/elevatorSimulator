@@ -85,7 +85,7 @@ FCT_BGN()
          fct_chk(door_position() == 0);
 
          // Now close it
- 
+
          // send the command to close the door
          elevator_control_cmd(CLOSE_DOOR);
 

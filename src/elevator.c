@@ -19,7 +19,7 @@ static volatile unsigned int cabPosition; // 20 to 40.  20 is the second floor,
                                           // 30 is the third floor, etc.
 static volatile int cabDirection;         // -1 is down, +1 is up.  and 0 is neither
 static volatile int doorPosition;         //  0 is open, 5 is fully closed
-static volatile int doorDirection;        // -1 is closing, +1 is opening, 0 is not moving
+static volatile int doorDirection;        // +1 is closing, -1 is opening, 0 is not moving
 
 static volatile int lastDoorPosition;
 static volatile int lastCabPosition;
@@ -59,22 +59,23 @@ int elevator_control_cmd(unsigned int c)
                 return -1;
         }
 
-        cabDirection = 0;
+        // a safe default
+        cabDirection = ELEV_CAB_DIRECTION_NEUTRAL;
         if (c & GO_UP)
         {
-                cabDirection = 1;
+                cabDirection = ELEV_CAB_DIRECTION_UP;
         }
         if (c & GO_DOWN)
         {
-                cabDirection = -1;
+                cabDirection = ELEV_CAB_DIRECTION_DOWN;
         }
         if (c & STOP)
         {
-                cabDirection = 0;
+                cabDirection = ELEV_CAB_DIRECTION_NEUTRAL;
         }
 
         //    doorDirection
-        doorDirection = 0;
+        doorDirection = ELEV_DOOR_DIRECTION_NOT_MOVING;
         if (__builtin_popcount(c & (OPEN_DOOR | CLOSE_DOOR)) > 1)
         {
                 ERROR_PRINT("invalid command %x\n", c);
@@ -82,11 +83,11 @@ int elevator_control_cmd(unsigned int c)
         }
         if (c & OPEN_DOOR)
         {
-                doorDirection = -1;
+                doorDirection = ELEV_DOOR_DIRECTION_OPENING;
         }
         if (c & CLOSE_DOOR)
         {
-                doorDirection = 1;
+                doorDirection = ELEV_DOOR_DIRECTION_CLOSING;
         }
         return 0;
 }
@@ -120,7 +121,7 @@ void elevator_tick()
                 {
                         // hang where we are
                 }
-                else if (cabDirection == 1)
+                else if (cabDirection == ELEV_CAB_DIRECTION_UP)
                 {
                         // going up
                         if (cabPosition < 40)
@@ -181,7 +182,7 @@ void elevator_tick()
                 // DOOR_IS_OBSTRUCTED();
                 // An obstructed door is found when the door is obstructed when it is closing,
                 // at position 4
-                if ((doorPosition == 4) && (doorDirection = -1) && obstructed)
+                if ((doorPosition == ELEV_DOOR_POSITION_CLOSED - 1) && (doorDirection == -1) && obstructed)
                 {
                         event_to_controller(DOOR_IS_OBSTRUCTED);
                 }
@@ -189,23 +190,23 @@ void elevator_tick()
                 {
                         if (lastCabPosition != cabPosition)
                         {
-                                if (cabPosition == 20)
+                                if (cabPosition == ELEV_CAB_POSITION_2)
                                 {
                                         event_to_controller(CAB_POSITION_FLOOR_2);
                                 }
-                                else if (cabPosition == 25)
+                                else if (cabPosition == ELEV_CAB_POSITION_2_5)
                                 {
                                         event_to_controller(CAB_POSITION_FLOOR_2_5);
                                 }
-                                else if (cabPosition == 30)
+                                else if (cabPosition == ELEV_CAB_POSITION_3)
                                 {
                                         event_to_controller(CAB_POSITION_FLOOR_3);
                                 }
-                                else if (cabPosition == 35)
+                                else if (cabPosition == ELEV_CAB_POSITION_3_5)
                                 {
                                         event_to_controller(CAB_POSITION_FLOOR_3_5);
                                 }
-                                else if (cabPosition == 40)
+                                else if (cabPosition == ELEV_CAB_POSITION_4)
                                 {
                                         event_to_controller(CAB_POSITION_FLOOR_4);
                                 }
@@ -240,7 +241,7 @@ void power_on()
 void power_off()
 {
         DEBUG_PRINT("\n");
-        power = 0;
+        power = ELEV_POWER_OFF;
 }
 
 int power_status()
