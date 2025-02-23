@@ -59,16 +59,16 @@ For the Elevator simulator.
 |        |        cabDirection = ELEV_CAB_DIRECTION_NEUTRAL;        |                     |         |
 |        |        doorPosition = ELEV_DOOR_POSITION_CLOSED;         |                     |         |
 |        |        doorDirection = ELEV_DOOR_DIRECTION_NOT_MOVING;   |                     |         |
-| 020    | The elevator shall create an event when it arrives at 
-|        | floor2.
-| 021    | The elevator shall create an event when it arrives at
-|        | floor 2.5
-| 022    | The elevator shall create an event when it arrives at 
-|        | floor 3
-| 023    | The elevator shall create an event when it arrives at
-|        | floor 3.5
-| 024    | The elevator shall create an event when it arrives at 
-|        | floor 4
+| 020    | The elevator shall create an event when it arrives at    |
+|        | floor2.                                                  |
+| 021    | The elevator shall create an event when it arrives at    |
+|        | floor 2.5                                                |
+| 022    | The elevator shall create an event when it arrives at    |
+|        | floor 3                                                  |
+| 023    | The elevator shall create an event when it arrives at    |
+|        | floor 3.5                                                |
+| 024    | The elevator shall create an event when it arrives at    |
+|        | floor 4                                                  |
 
 
 | 011    | The elevator will ignore invalid control combinations:    | elevator_control_cmd| TC001   |
