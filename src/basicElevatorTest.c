@@ -6,6 +6,20 @@
 #include "fct.h"
 #include <string.h>
 
+// These functions are used for the tests in this file
+// only.
+static eventEnum last_event = -1;
+void event_to_controller(eventEnum e)
+{
+   last_event = e;
+}
+
+static int init_called = 0;
+void controller_init()
+{
+   init_called = 1;
+}
+
 FCT_BGN()
 {
    FCT_SUITE_BGN(misc things)

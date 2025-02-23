@@ -35,15 +35,15 @@ eSim: src/elevatorGUI.cxx src/main.cxx libevsim.a
 		src/elevatorGUI.cxx  src/main.cxx   \
 	 	-o eSim ${CXXOPTS} -L./ -levsim -lfltk
 
-basicTest: elevatorController/basicTest.c libevsim.a
+basicTest: elevatorController/basicTest.c  libevsim.a
 	${CC} ${CPPFLAGS} \
 		elevatorController/basicTest.c \
-		-o basicTest ${COPTS} -L./ -levsim
+		-o basicTest ${COPTS}  -L./ -levsim
 
-basicElevatorTest: src/basicElevatorTest.c libevsim.a
+basicElevatorTest: src/basicElevatorTest.c  src/elevator.c
 	${CC} ${CPPFLAGS} \
-		src/basicElevatorTest.c \
-		-o basicElevatorTest ${COPTS} -L./ -levsim
+		src/basicElevatorTest.c src/elevator.c \
+		-o basicElevatorTest ${COPTS} 
 
 test: basicTest basicElevatorTest 
 	./basicTest
