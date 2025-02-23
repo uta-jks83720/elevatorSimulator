@@ -5,9 +5,9 @@ for educational purposes (specifically CSE3310).
 
 Think of this system as 3 parts:
 
-a.  The elevator GUI, which provides a way to provide stimulus (events) to the system. It is coded in the C++ language.  A majority was created using the fltk gui layout program known as 'fluid'.
-b.  The elevator, which simulates the physical elevator. This is coded in the C programming language.
-c.  The elevator controller, which controls the physical elevator based upon the inputs recieved.  It is coded in the C language.
+1. The elevator GUI, which provides a way to provide stimulus (events) to the system. It is coded in the C++ language.  A majority was created using the fltk gui layout program known as 'fluid'.
+2. The elevator, which simulates the physical elevator. This is coded in the C programming language.
+3. The elevator controller, which controls the physical elevator based upon the inputs recieved.  It is coded in the C language.
 
 to change the UI:
 
