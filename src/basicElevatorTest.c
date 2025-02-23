@@ -8,10 +8,8 @@
 
 FCT_BGN()
 {
-
    FCT_SUITE_BGN(misc things)
    {
-
       FCT_TEST_BGN(invalid controls)
       {
          printf("\n");
@@ -29,7 +27,6 @@ FCT_BGN()
       FCT_TEST_END();
    }
    FCT_SUITE_END();
-
    FCT_SUITE_BGN(door)
    {
       FCT_TEST_BGN(open)
@@ -58,7 +55,6 @@ FCT_BGN()
          printf("\n");
       }
       FCT_TEST_END();
-
       FCT_TEST_BGN(close)
       {
          printf("\n");
@@ -79,7 +75,6 @@ FCT_BGN()
          for (int i = 0; i < 5; i++) // 5 seconds
          {
             elevator_tick();
-            printf("the door pos is %d\n", door_position());
          }
          // test if it is open
          fct_chk(door_position() == 0);
@@ -93,7 +88,6 @@ FCT_BGN()
          for (int i = 0; i < 5; i++) // 5 seconds
          {
             elevator_tick();
-            printf("the door pos is %d\n", door_position());
          }
          // test if it is closed
          fct_chk(door_position() == 5);
@@ -102,6 +96,50 @@ FCT_BGN()
       FCT_TEST_END();
    }
    FCT_SUITE_END();
+   FCT_SUITE_BGN(cab movement)
+   {
+      FCT_TEST_BGN(up)
+      {
+         printf("\n");
 
+         // initialize the elevator
+         init_elevator();
+
+         // turn it on
+         power_on();
+         // should be on the second floor
+
+         fct_chk(cab_position() == ELEV_CAB_POSITION_2);
+
+         // send it up
+         elevator_control_cmd(GO_UP);
+
+         // tick() it
+         for (int i = 0; i < 10; i++) // 10 seconds
+         {
+            elevator_tick();
+         }
+         // test if it is at floor 3
+         fct_chk(cab_position() == ELEV_CAB_POSITION_3);
+
+         // go for 10 more seconds
+
+         // send it up
+         elevator_control_cmd(GO_UP);
+
+         // tick() it
+         for (int i = 0; i < 10; i++) // 10 seconds
+         {
+            elevator_tick();
+         }
+
+         // test if it is at floor 4
+         fct_chk(cab_position() == ELEV_CAB_POSITION_4);
+
+         printf("\n");
+      }
+      FCT_TEST_END();
+   }
+   FCT_SUITE_END();
    FCT_END();
 }
