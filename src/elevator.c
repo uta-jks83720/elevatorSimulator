@@ -30,20 +30,20 @@ static volatile unsigned int elevatorIndicators;
 
 void door_obstructed(int x)
 {
-        DEBUG_PRINT("setting obstructed door to %X\n", x);
+        DEBUG_PRINT("setting obstructed door to %#x\n", x);
         obstructed = x;
 }
 
 int elevator_indicators(unsigned int i)
 {
-        INFO_PRINT("indicators set to %x\n", i);
+        INFO_PRINT("indicators set to %#x\n", i);
         elevatorIndicators = i;
         return 1;
 }
 
 int elevator_control_cmd(unsigned int c)
 {
-        DEBUG_PRINT("cmd = %x\n", c);
+        DEBUG_PRINT("cmd = %#x\n", c);
         // controls to the elevator are recieved here
 
         // Check for safety issues
@@ -55,7 +55,7 @@ int elevator_control_cmd(unsigned int c)
         // (any excuse to use popcount intrinsic)
         if (__builtin_popcount(c & (GO_UP | GO_DOWN | STOP)) > 1)
         {
-                ERROR_PRINT("invalid command %x\n", c);
+                ERROR_PRINT("invalid command %#x\n", c);
                 return -1;
         }
 
@@ -78,7 +78,7 @@ int elevator_control_cmd(unsigned int c)
         doorDirection = ELEV_DOOR_DIRECTION_NOT_MOVING;
         if (__builtin_popcount(c & (OPEN_DOOR | CLOSE_DOOR)) > 1)
         {
-                ERROR_PRINT("invalid command %x\n", c);
+                ERROR_PRINT("invalid command %#x\n", c);
                 return -1;
         }
         if (c & OPEN_DOOR)
@@ -97,11 +97,11 @@ void init_elevator()
         DEBUG_PRINT("\n");
         // this function is called to initialize the simulated elevator
         elapsedTime = 0;
-        power = 0;
-        cabPosition = 20; // ground floor
-        cabDirection = 0; // not moving
-        doorPosition = 5; // closed
-        doorDirection = 0;
+        power = ELEV_POWER_OFF;
+        cabPosition = ELEV_CAB_POSITION_2;         // ground floor
+        cabDirection = ELEV_CAB_DIRECTION_NEUTRAL; // not moving
+        doorPosition = ELEV_DOOR_POSITION_CLOSED;  // closed
+        doorDirection = ELEV_DOOR_DIRECTION_NOT_MOVING;
 }
 
 void elevator_tick()
