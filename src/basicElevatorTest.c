@@ -10,7 +10,7 @@ FCT_BGN()
 {
    FCT_SUITE_BGN(misc things)
    {
-      FCT_TEST_BGN(invalid controls)
+      FCT_TEST_BGN(TC001)
       {
          printf("\n");
          /*
@@ -29,7 +29,7 @@ FCT_BGN()
    FCT_SUITE_END();
    FCT_SUITE_BGN(door)
    {
-      FCT_TEST_BGN(open)
+      FCT_TEST_BGN(TC002)
       {
          printf("\n");
 
@@ -55,7 +55,7 @@ FCT_BGN()
          printf("\n");
       }
       FCT_TEST_END();
-      FCT_TEST_BGN(close)
+      FCT_TEST_BGN(TC003)
       {
          printf("\n");
 
