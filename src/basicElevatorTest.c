@@ -155,5 +155,15 @@ FCT_BGN()
       FCT_TEST_END();
    }
    FCT_SUITE_END();
+   FCT_SUITE_BGN(ets)
+   {
+      FCT_TEST_BGN(u)
+      {
+      }
+      FCT_TEST_END();
+   }
+   FCT_SUITE_END();
+
    FCT_END();
 }
+
