@@ -47,6 +47,7 @@ int elevator_control_cmd(unsigned int c)
         // controls to the elevator are recieved here
 
         // Check for safety issues
+        // Note these can be turned off with a compile option
         assert(!((c & GO_UP) & (c & GO_DOWN)));
         assert(!((c & GO_UP) & (c & STOP)));
         assert(!((c & GO_DOWN) & (c & STOP)));
