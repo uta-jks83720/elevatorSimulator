@@ -53,12 +53,12 @@ void (*on_exit[GOINGDNTO2 + 1])() = {NULL};
 
 typedef struct
 {
-	bool active; // this entry is ignored if active is false
 	elevatorStateEnum nextState;
 } stateInfo_t;
 
 #define f false
 #define t true
+#define NULL 0
 #define _
 #define __
 #define ___
@@ -73,19 +73,22 @@ typedef struct
 #define ____________
 #define _____________
 #define ______________
-// if f, then the state is not used for anything......
+#define _______________
+#define ________________
+#define _________________
+//  if NULL, then there is no transition for that event while in that state.
 //                    STATE           EVENT
 const stateInfo_t fsm[GOINGDNTO2 + 1][REQ_BELL_RELEASED + 1] = {
-	/*              TIMER_EXPIRED     POWER ON         DOOR_IS_OPEN     DOOR_IS_CLOSED   DOOR_IS_OBSTRUCTED  CAB_POSITION_FLOOR_2   CAB_POSITION_FLOOR_2_5   CAB_POSITION_FLOOR_3   CAB_POSITION_FLOOR_3_5  CAB_POSITION_FLOOR_4   CALL_FLOOR_2      CALL_FLOOR_3     CALL_FLOOR_4      REQ_DOOR_OPEN      REQ_STOP        REQ_FLOOR_2      REQ_FLOOR_3          REQ_FLOOR_4        REQ_BELL_PRESSED   REQ_BELL_RELEASED*/
-	/*OFF       */ {{f, INIT}, ________{t, INIT}, ______{f, OFF}, _______{f, OFF}, _______{f, OFF}, __________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ______________{f, OFF}, _____________{f, OFF}, ______________{f, OFF}, ________{f, OFF}, _______{f, OFF}, ________{f, OFF}, ________{f, OFF}, _______{f, OFF}, _______{f, OFF}, ___________{f, OFF}, ________{f, OFF}, __________{f, OFF}},
-	/*INIT      */ {{t, FLOOR2}, ______{f, INIT}, ______{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
-	/*FLOOR2    */ {{f, INIT}, ________{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, ____{f, FLOOR2}, _______{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, ___________{f, FLOOR2}, __________{f, FLOOR2}, ___________{f, FLOOR2}, _____{t, GOINGUPTO3}, {t, GOINGUPTO4}, _{f, FLOOR2}, _____{f, FLOOR2}, ____{f, FLOOR2}, ____{t, GOINGUPTO3}, ____{t, GOINGUPTO4}, _{f, FLOOR2}, _______{f, FLOOR2}},
-	/*FLOOR3    */ {{f, INIT}, ________{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, ____{f, FLOOR3}, _______{f, FLOOR3}, __________{f, FLOOR3}, ___________{f, FLOOR3}, ___________{f, FLOOR3}, __________{f, FLOOR3}, ___________{t, GOINGDNTO2}, _{f, FLOOR3}, ____{t, GOINGUPTO4}, _{f, FLOOR3}, _____{f, FLOOR3}, ____{t, GOINGDNTO2}, {f, FLOOR3}, ________{t, GOINGUPTO4}, _{f, FLOOR3}, _______{f, FLOOR3}},
-	/*FLOOR4    */ {{f, INIT}, ________{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, ____{f, FLOOR4}, _______{f, FLOOR4}, __________{f, FLOOR4}, ___________{f, FLOOR4}, ___________{f, FLOOR4}, __________{f, FLOOR4}, ___________{t, GOINGDNTO2}, _{t, GOINGDNTO3}, {f, FLOOR4}, _____{f, FLOOR4}, _____{f, FLOOR4}, ____{t, GOINGDNTO2}, {t, GOINGDNTO3}, ____{f, FLOOR4}, _____{f, FLOOR4}, _______{f, FLOOR4}},
-	/*GOINGUPTO3*/ {{f, INIT}, ________{f, GOINGDNTO3}, {f, GOINGUPTO3}, {f, GOINGUPTO3}, {f, GOINGUPTO3}, ___{f, GOINGUPTO3}, ______{f, GOINGUPTO3}, _______{t, FLOOR3}, ___________{f, GOINGUPTO3}, ______{f, GOINGUPTO3}, _______{f, GOINGUPTO3}, _{f, GOINGUPTO3}, {f, GOINGUPTO3}, _{f, GOINGUPTO3}, _{f, GOINGUPTO3}, {f, GOINGUPTO3}, {f, GOINGUPTO3}, ____{f, GOINGUPTO3}, _{f, GOINGUPTO3}, ___{f, GOINGUPTO3}},
-	/*GOINGDNTO3*/ {{f, INIT}, ________{f, GOINGUPTO3}, {f, GOINGDNTO3}, {f, GOINGDNTO3}, {f, GOINGDNTO3}, ___{f, GOINGDNTO3}, ______{f, GOINGDNTO3}, _______{t, FLOOR3}, ___________{f, GOINGDNTO3}, ______{f, GOINGDNTO3}, _______{f, GOINGDNTO3}, _{f, GOINGDNTO3}, {f, GOINGDNTO3}, _{f, GOINGDNTO3}, _{f, GOINGDNTO3}, {f, GOINGDNTO3}, {f, GOINGDNTO3}, ____{f, GOINGDNTO3}, _{f, GOINGDNTO3}, ___{f, GOINGDNTO3}},
-	/*GOINGUPTO4*/ {{f, INIT}, ________{f, GOINGUPTO4}, {f, GOINGUPTO4}, {f, GOINGUPTO4}, {f, GOINGUPTO4}, ___{f, GOINGUPTO4}, ______{f, GOINGUPTO4}, _______{f, GOINGUPTO4}, _______{f, GOINGUPTO4}, ______{t, FLOOR4}, ___________{f, GOINGUPTO4}, _{f, GOINGUPTO4}, {f, GOINGUPTO4}, _{f, GOINGUPTO4}, _{f, GOINGUPTO4}, {f, GOINGUPTO4}, {f, GOINGUPTO4}, ____{f, GOINGUPTO4}, _{f, GOINGUPTO4}, ___{f, GOINGUPTO4}},
-	/*GOINGDNTO2*/ {{f, INIT}, ________{f, GOINGDNTO2}, {f, GOINGDNTO2}, {f, GOINGDNTO2}, {f, GOINGDNTO2}, ___{t, FLOOR2}, __________{f, GOINGDNTO2}, _______{f, GOINGDNTO2}, _______{f, GOINGDNTO2}, ______{f, GOINGDNTO2}, _______{f, GOINGDNTO2}, _{f, GOINGDNTO2}, {f, GOINGDNTO2}, _{f, GOINGDNTO2}, _{f, GOINGDNTO2}, {f, GOINGDNTO2}, {f, GOINGDNTO2}, ____{f, GOINGDNTO2}, _{f, GOINGDNTO2}, ___{f, GOINGDNTO2}}};
+	/*              TIMER_EXPIRED     POWER ON         DOOR_IS_OPEN     DOOR_IS_CLOSED   DOOR_IS_OBSTRUCTED  CAB_POSITION_FLOOR_2   CAB_POSITION_FLOOR_2_5   CAB_POSITION_FLOOR_3 CAB_POSITION_FLOOR_3_5  CAB_POSITION_FLOOR_4   CALL_FLOOR_2      CALL_FLOOR_3     CALL_FLOOR_4      REQ_DOOR_OPEN      REQ_STOP     REQ_FLOOR_2      REQ_FLOOR_3      REQ_FLOOR_4     REQ_BELL_PRESSED   REQ_BELL_RELEASED*/
+	/*OFF       */ {{NULL}, ___________{INIT}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
+	/*INIT      */ {{FLOOR2}, _________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{NULL}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NULL}, __________{NULL}},
+	/*FLOOR2    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{NULL}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NULL}, __________{NULL}},
+	/*FLOOR3    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{GOINGDNTO2}, _____{NULL}, _______{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{GOINGDNTO2}, _{NULL}, ________{GOINGUPTO4}, ___{NULL}, __________{NULL}},
+	/*FLOOR4    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{GOINGDNTO2}, _____{GOINGDNTO3}, _{NULL}, ___________{NULL}, ___________{NULL}, _______{GOINGDNTO2}, _{GOINGDNTO3}, __{NULL}, _________{NULL}, __________{NULL}},
+	/*GOINGUPTO3*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{FLOOR3}, ____________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
+	/*GOINGDNTO3*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{FLOOR3}, ____________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
+	/*GOINGUPTO4*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{FLOOR4}, ____________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
+	/*GOINGDNTO2*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{FLOOR2}, ____________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}}};
 
 // after formatting the table, perhaps reading in a file would be easier.
 // but, you can't beat looking at code compared to debugging it.
@@ -98,7 +101,7 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 	elevatorStateEnum nextState = state;
 
 	// run the "on entry" for the new state
-	if (fsm[state][event].active)
+	if (fsm[state][event].nextState)
 	{
 		INFO_PRINT("current state = %s\n", elevatorStateEnumNames(state));
 
