@@ -58,6 +58,8 @@ typedef struct
 
 #define f false
 #define t true
+#undef NULL
+#define NULL 0
 #define _
 #define __
 #define ___
