@@ -58,8 +58,7 @@ typedef struct
 
 #define f false
 #define t true
-#undef NULL
-#define NULL 0
+#define NONE (-1)  // Meaning no transition
 #define _
 #define __
 #define ___
@@ -81,15 +80,15 @@ typedef struct
 //                    STATE           EVENT
 const stateInfo_t fsm[GOINGDNTO2 + 1][REQ_BELL_RELEASED + 1] = {
 	/*              TIMER_EXPIRED     POWER ON         DOOR_IS_OPEN     DOOR_IS_CLOSED   DOOR_IS_OBSTRUCTED  CAB_POSITION_FLOOR_2   CAB_POSITION_FLOOR_2_5   CAB_POSITION_FLOOR_3 CAB_POSITION_FLOOR_3_5  CAB_POSITION_FLOOR_4   CALL_FLOOR_2      CALL_FLOOR_3     CALL_FLOOR_4      REQ_DOOR_OPEN      REQ_STOP     REQ_FLOOR_2      REQ_FLOOR_3      REQ_FLOOR_4     REQ_BELL_PRESSED   REQ_BELL_RELEASED*/
-	/*OFF       */ {{NULL}, ___________{INIT}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
-	/*INIT      */ {{FLOOR2}, _________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{NULL}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NULL}, __________{NULL}},
-	/*FLOOR2    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{NULL}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NULL}, __________{NULL}},
-	/*FLOOR3    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{GOINGDNTO2}, _____{NULL}, _______{GOINGUPTO4}, _____{NULL}, ___________{NULL}, _______{GOINGDNTO2}, _{NULL}, ________{GOINGUPTO4}, ___{NULL}, __________{NULL}},
-	/*FLOOR4    */ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{GOINGDNTO2}, _____{GOINGDNTO3}, _{NULL}, ___________{NULL}, ___________{NULL}, _______{GOINGDNTO2}, _{GOINGDNTO3}, __{NULL}, _________{NULL}, __________{NULL}},
-	/*GOINGUPTO3*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{FLOOR3}, ____________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
-	/*GOINGDNTO3*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{FLOOR3}, ____________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
-	/*GOINGUPTO4*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{NULL}, ______________{NULL}, _________________{NULL}, ______________{NULL}, _______________{FLOOR4}, ____________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}},
-	/*GOINGDNTO2*/ {{NULL}, ___________{NULL}, _________{NULL}, __________{NULL}, __________{NULL}, ____________{FLOOR2}, ____________{NULL}, _________________{NULL}, ______________{NULL}, _______________{NULL}, ______________{NULL}, ___________{NULL}, _______{NULL}, ___________{NULL}, ___________{NULL}, _______{NULL}, _______{NULL}, ________{NULL}, _________{NULL}, __________{NULL}}};
+	/*OFF       */ {{NONE}, ___________{INIT}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{NONE}, ___________{NONE}, _______{NONE}, ___________{NONE}, ___________{NONE}, _______{NONE}, _______{NONE}, ________{NONE}, _________{NONE}, __________{NONE}},
+	/*INIT      */ {{FLOOR2}, _________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{NONE}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NONE}, ___________{NONE}, _______{NONE}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NONE}, __________{NONE}},
+	/*FLOOR2    */ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{NONE}, ___________{GOINGUPTO3}, _{GOINGUPTO4}, _____{NONE}, ___________{NONE}, _______{NONE}, _______{GOINGUPTO3}, __{GOINGUPTO4}, ___{NONE}, __________{NONE}},
+	/*FLOOR3    */ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{GOINGDNTO2}, _____{NONE}, _______{GOINGUPTO4}, _____{NONE}, ___________{NONE}, _______{GOINGDNTO2}, _{NONE}, ________{GOINGUPTO4}, ___{NONE}, __________{NONE}},
+	/*FLOOR4    */ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{GOINGDNTO2}, _____{GOINGDNTO3}, _{NONE}, ___________{NONE}, ___________{NONE}, _______{GOINGDNTO2}, _{GOINGDNTO3}, __{NONE}, _________{NONE}, __________{NONE}},
+	/*GOINGUPTO3*/ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{FLOOR3}, ____________{NONE}, _______________{NONE}, ______________{NONE}, ___________{NONE}, _______{NONE}, ___________{NONE}, ___________{NONE}, _______{NONE}, _______{NONE}, ________{NONE}, _________{NONE}, __________{NONE}},
+	/*GOINGDNTO3*/ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{FLOOR3}, ____________{NONE}, _______________{NONE}, ______________{NONE}, ___________{NONE}, _______{NONE}, ___________{NONE}, ___________{NONE}, _______{NONE}, _______{NONE}, ________{NONE}, _________{NONE}, __________{NONE}},
+	/*GOINGUPTO4*/ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{NONE}, ______________{NONE}, _________________{NONE}, ______________{NONE}, _______________{FLOOR4}, ____________{NONE}, ___________{NONE}, _______{NONE}, ___________{NONE}, ___________{NONE}, _______{NONE}, _______{NONE}, ________{NONE}, _________{NONE}, __________{NONE}},
+	/*GOINGDNTO2*/ {{NONE}, ___________{NONE}, _________{NONE}, __________{NONE}, __________{NONE}, ____________{FLOOR2}, ____________{NONE}, _________________{NONE}, ______________{NONE}, _______________{NONE}, ______________{NONE}, ___________{NONE}, _______{NONE}, ___________{NONE}, ___________{NONE}, _______{NONE}, _______{NONE}, ________{NONE}, _________{NONE}, __________{NONE}}};
 
 // after formatting the table, perhaps reading in a file would be easier.
 // but, you can't beat looking at code compared to debugging it.
@@ -102,7 +101,7 @@ elevatorStateEnum transition(elevatorStateEnum state, eventEnum event)
 	elevatorStateEnum nextState = state;
 
 	// run the "on entry" for the new state
-	if (fsm[state][event].nextState)
+	if (fsm[state][event].nextState !=NONE)
 	{
 		INFO_PRINT("current state = %s\n", elevatorStateEnumNames(state));
 
