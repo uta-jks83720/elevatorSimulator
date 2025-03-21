@@ -18,7 +18,7 @@ extern "C"
     // States of the elevator system
 
     typedef enum
-    {
+        {
         OFF,
         INIT,
         FLOOR2,
@@ -27,7 +27,24 @@ extern "C"
         GOINGUPTO3,
         GOINGDNTO3,
         GOINGUPTO4,
-        GOINGDNTO2
+        GOINGDNTO2,
+        // New states from state diagram
+        FLOOR2_DOOR_OPENING,
+        FLOOR2_DOOR_OPEN,
+        FLOOR2_DOOR_CLOSING,
+        FLOOR2_DOOR_CLOSED,
+        FLOOR3_DOOR_OPENING,
+        FLOOR3_DOOR_OPEN,
+        FLOOR3_DOOR_CLOSING,
+        FLOOR3_DOOR_CLOSED,
+        FLOOR4_DOOR_OPENING,
+        FLOOR4_DOOR_OPEN,
+        FLOOR4_DOOR_CLOSING,
+        FLOOR4_DOOR_CLOSED,
+        MOVING_UP,
+        MOVING_DOWN,
+        CAB_POS_2_5,
+        CAB_POS_3_5
     } elevatorStateEnum;
 
     void controller_tick();

@@ -43,11 +43,19 @@ FCT_BGN()
          fct_chk(transition(FLOOR3, REQ_FLOOR_4) == GOINGUPTO4);
          fct_chk(transition(FLOOR4, REQ_FLOOR_2) == GOINGDNTO2);
          fct_chk(transition(FLOOR4, REQ_FLOOR_3) == GOINGDNTO3);
+         
+         
+         //test to make sure if door is obstructed, when closing the door opens
+         fct_chk(transition(FLOOR2_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR2_DOOR_OPENING);
+         fct_chk(transition(FLOOR3_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR3_DOOR_OPENING);
+         fct_chk(transition(FLOOR4_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR4_DOOR_OPENING);
+
 
          /* these events should be ignored */
          fct_chk(transition(FLOOR2, CALL_FLOOR_2) == FLOOR2);
          fct_chk(transition(FLOOR3, CALL_FLOOR_3) == FLOOR3);
          fct_chk(transition(FLOOR4, CALL_FLOOR_4) == FLOOR4);
+         
 
          printf("\n");
       }
