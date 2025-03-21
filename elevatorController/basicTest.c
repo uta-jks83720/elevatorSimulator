@@ -46,9 +46,16 @@ FCT_BGN()
          
          
          //test to make sure if door is obstructed, when closing the door opens
+         //automatic tests I added
          fct_chk(transition(FLOOR2_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR2_DOOR_OPENING);
          fct_chk(transition(FLOOR3_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR3_DOOR_OPENING);
          fct_chk(transition(FLOOR4_DOOR_CLOSING, DOOR_IS_OBSTRUCTED) == FLOOR4_DOOR_OPENING);
+
+         //automatic test i added to make sure that when you get to a new floor but no button is pushed ie the timer expires
+         //the door will close 
+         fct_chk(transition(FLOOR2, TIMER_EXPIRED) == FLOOR2_DOOR_CLOSED);
+         fct_chk(transition(FLOOR3, TIMER_EXPIRED) == FLOOR3_DOOR_CLOSED);
+         fct_chk(transition(FLOOR4, TIMER_EXPIRED) == FLOOR4_DOOR_CLOSED);
 
 
          /* these events should be ignored */
